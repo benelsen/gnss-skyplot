@@ -1,0 +1,42 @@
+{
+  "name": "gnss-skyplot",
+  "version": "0.2.0",
+  "description": "",
+  "author": "Ben Elsen <mail@benelsen.com> (https://benelsen.com/)",
+  "homepage": "https://github.com/benelsen/gnss-skyplot",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/benelsen/gnss-skyplot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/benelsen/gnss-skyplot/issues"
+  },
+  "keywords": [
+    "GNSS",
+    "Satellites",
+    "GPS",
+    "GLONASS",
+    "Galileo",
+    "BeiDou",
+    "QZSS"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.2.0",
+    "d3": "^3.4.9",
+    "orbjs": "^0.1.2",
+    "sylvester": "git://github.com/jcoglan/sylvester"
+  },
+  "devDependencies": {
+    "browserify": "^4.2.0",
+    "gulp": "^3.8.6",
+    "gulp-concat": "^2.3.3",
+    "gulp-livereload": "^2.1.0",
+    "gulp-minify-css": "^0.3.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^0.4.5",
+    "gulp-uglify": "^0.3.1",
+    "vinyl-buffer": "0.0.0",
+    "vinyl-source-stream": "^0.1.1"
+  }
+}
