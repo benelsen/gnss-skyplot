@@ -5,10 +5,9 @@ var browserify = require('browserify'),
     source = require('vinyl-source-stream'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
-    livereload = require('gulp-livereload'),
     uglify = require('gulp-uglify'),
-    sourcemaps = require('gulp-sourcemaps'),
-    minifyCSS = require('gulp-minify-css');
+    minifyCSS = require('gulp-minify-css'),
+    livereload = require('gulp-livereload');
 
 gulp.task('watch', function () {
 

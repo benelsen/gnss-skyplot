@@ -122,7 +122,8 @@ function refresh(utc) {
   //   '/' + pad(utc.getUTCDate(), 2) + ' ' + pad(utc.getUTCHours(), 2) +
   //   ':' + pad(utc.getUTCMinutes(), 2) + ':' + pad(utc.getUTCSeconds(), 2) + ' +0000';
 
-  var t = ( utc.getTime() - new Date("1980-01-06T00:00:00.000Z").getTime() ) / 1000 + (orb.time.leapSeconds(utc) - 19);
+  // var t = ( utc.getTime() - new Date("1980-01-06T00:00:00.000Z").getTime() ) / 1000 + (orb.time.leapSeconds(utc) - 19);
+  var t = orb.time.UTCtoGPS( utc.getTime() / 1000 ) - new Date("1980-01-06T00:00:00.000Z").getTime() / 1000;
 
   var B = +document.querySelector('input.latitude').value * Math.PI/180,
       L = +document.querySelector('input.longitude').value * Math.PI/180,
@@ -152,7 +153,7 @@ function loadAlmanac(t, cb) {
 
   if ( !almanac.requestedFor || Math.abs( almanac.requestedFor - t ) > 3600 ) {
 
-    d3.json('//benelsen.com/gps-skyplot/api/almanac/'+ t, function(err, data) {
+    d3.json('https://benelsen.com/gps-skyplot/api/almanac/'+ t, function(err, data) {
       almanac = data;
       almanac.requestedFor = t;
       cb(err);
