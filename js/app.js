@@ -7,10 +7,10 @@ var d3 = require('d3'),
 var almanac = {};
 
 document.querySelector('button.calculate').onclick = draw;
-document.querySelector('button.locate').onclick = locateMe;
+document.querySelector('button.locate').onclick = getLocation;
 document.querySelector('button.now').onclick = setTimeToNow;
 
-setTimeToNow();
+getLocation();
 
 var width = document.querySelector('.svg-container').getBoundingClientRect().width - 30,
     width = width > 600 ? 600 : width,
@@ -71,9 +71,10 @@ ticks.append("text")
   .attr('text-anchor',  'end')
   .attr('dy', 5);
 
+setTimeToNow();
 draw();
 
-function locateMe() {
+function getLocation() {
 
   if ( navigator.geolocation ) {
     navigator.geolocation.getCurrentPosition(function(location) {
