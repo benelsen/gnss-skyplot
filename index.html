@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>GPS Skyplot</title>
+  <meta charset="utf-8">
+
+  <title>GNSS Skyplot</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" type="text/css" href="build/index.min.css">
+  <link rel="stylesheet" type="text/css" href="build/css/vendor.css">
+  <link rel="stylesheet" type="text/css" href="build/css/index.css">
 </head>
 <body>
 
@@ -13,41 +16,17 @@
 
     <div class="row">
 
+      <div class="col-xs-12 col-sm-8 svg-container col-md-8 col-lg-7">
+
+        <svg data-hook="skyplot"></svg>
+
+      </div>
+
+      <div class="clearfix visible-xs"></div>
+
       <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 col-md-4 col-lg-3 col-lg-offset-1">
 
-        <form class="form-horizontal" role="form">
-
-          <div class="form-group">
-            <label for="inputDate" class="control-label">Time (yyyy/mm/dd hh:mm:ss offset)</label>
-            <div class="input-group">
-              <input type="text" class="form-control datetime" id="inputDate" value="yyyy/mm/dd hh:mm:ss +0000">
-              <span class="input-group-btn">
-                <button class="btn btn-info now" type="button">Now</button>
-              </span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="inputLatitude" class="control-label">Latitude (decimal degrees)</label>
-            <input type="number" class="form-control latitude" id="inputLatitude" value="48.15" min="-90" max="90" step="0.1">
-          </div>
-
-          <div class="form-group">
-            <label for="inputLongitude" class="control-label">Longitude (decimal degrees)</label>
-            <input type="number" class="form-control longitude" id="inputLongitude" value="11.567" min="-180" max="180" step="0.1">
-          </div>
-
-          <div class="form-group">
-            <label for="inputHeight" class="control-label">Height (above ellipsoid)</label>
-            <input type="number" class="form-control height" id="inputHeight" value="520.0" min="-6378136" max="20000000">
-          </div>
-
-          <div class="form-group">
-            <button type="button" class="btn btn-primary calculate">Calculate Positions</button>
-            <button type="button" class="btn btn-info locate">Locate Me</button>
-          </div>
-
-        </form>
+        <form class="form-horizontal settings" data-hook="form"></form>
 
       </div>
 
@@ -55,38 +34,9 @@
 
       <div class="col-xs-12 col-sm-8 svg-container col-md-8 col-lg-7">
 
-        <svg class="skyplot"></svg>
+        <table class="table table-condensed dop" data-hook="dop"></table>
 
-        <table class="table table-condensed dop">
-          <thead>
-            <tr>
-              <th>GDOP</th>
-              <th>PDOP</th>
-              <th>HDOP</th>
-              <th>VDOP</th>
-              <th>TDOP</th>
-            </tr>
-          </thead>
-          <tbody>
-            <td class="gdop"></td>
-            <td class="pdop"></td>
-            <td class="hdop"></td>
-            <td class="vdop"></td>
-            <td class="tdop"></td>
-          </tbody>
-        </table>
-
-        <table class="table table-condensed horizontal">
-          <thead>
-            <tr>
-              <th>PRN</th>
-              <th>Elevation</th>
-              <th>Azimuth</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+        <table data-hook="satellite-list" class="table table-condensed horizontal satellite-list"></table>
 
       </div>
 
@@ -94,11 +44,7 @@
 
   </div>
 
-<!--   // <script src="js/lib/lib.min.js"></script>
-  // <script src="js/lib/orb.min.js"></script>
-  // <script src="js/app.js?t=201312171330" defer></script> -->
-
-  <script src="build/index.min.js"></script>
+  <script src="build/js/app.js"></script>
 
 </body>
 </html>

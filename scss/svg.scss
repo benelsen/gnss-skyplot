@@ -1,0 +1,110 @@
+
+.svg-container svg {
+  display: block;
+  margin: 0 auto;
+}
+
+svg {
+
+  width: 100%;
+  // min-height: 320px;
+  height: 100vmin;
+
+  path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  text {
+    font: 10px sans-serif;
+  }
+
+  .satellite path {
+    stroke: #000000;
+    opacity: 0.2;
+  }
+
+  .satellite.invisible {
+    visibility: hidden;
+  }
+
+  .satellite.highlight {
+    path {
+      stroke: #f00;
+      stroke-width: 1.2px;
+      opacity: 1;
+    }
+  }
+
+  .horizon {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+
+  .graticule {
+    stroke: #000;
+    stroke-width: 0.5px;
+    opacity: 0.4;
+  }
+
+  @media (min-resolution: 2dppx), (min-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2) {
+
+    .graticule {
+      stroke-width: 0.25px;
+    }
+
+    .ticks line {
+      stroke-width: 0.5px;
+    }
+
+    .horizon {
+      stroke-width: 1px;
+    }
+
+  }
+
+  .ticks line {
+    stroke: #000;
+  }
+
+  .ticks text {
+    text-anchor: middle;
+  }
+
+  .ticks--azimuth text {
+    visibility: hidden;
+  }
+
+  // N,E,S,W
+  .ticks--azimuth text:nth-of-type(9n + 1) {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  // N, 30, 60, E, 120…
+  .ticks--azimuth text:nth-of-type(3n+1) {
+    visibility: visible;
+  }
+
+  .ticks--elevation text {
+    visibility: hidden;
+  }
+
+  .ticks--elevation text:nth-of-type(3n) {
+    visibility: visible;
+  }
+
+  @media screen and (min-width: 480px) and (min-height: 480px) {
+
+    .ticks--azimuth text {
+      visibility: visible;
+    }
+
+    .ticks--elevation text {
+      visibility: visible;
+    }
+
+  }
+
+}

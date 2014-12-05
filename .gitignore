@@ -1,5 +1,2 @@
-bower_components
 node_modules
-js/lib/*
-css/lib/*
-build
+build/

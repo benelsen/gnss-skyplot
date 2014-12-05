@@ -1,57 +1,125 @@
 var gulp = require('gulp');
 
-var browserify = require('browserify'),
-    buffer = require('vinyl-buffer'),
-    source = require('vinyl-source-stream'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    uglify = require('gulp-uglify'),
-    minifyCSS = require('gulp-minify-css'),
-    livereload = require('gulp-livereload');
+var browserify = require('browserify');
+var buffer = require('vinyl-buffer');
+var concat = require('gulp-concat');
+var exorcist = require('exorcist');
+var livereload = require('gulp-livereload');
+var merge = require('merge-stream');
+var minifyCSS = require('gulp-minify-css');
+var mold = require('mold-source-map');
+var prefix = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+var source = require('vinyl-source-stream');
+var streamify = require('gulp-streamify');
+var streamqueue = require('streamqueue');
+var sourcemaps = require('gulp-sourcemaps');
+var to5 = require("6to5-browserify");
+var transform = require('vinyl-transform');
+var uglify = require('gulp-uglify');
+var watchify = require('watchify');
 
-gulp.task('watch', function () {
+gulp.task('watch', ['css', 'livereload', 'watchify'], function () {
 
-  var server = livereload();
+  gulp.watch('scss/*.scss', ['sass']);
 
-  function reload (file) {
-    server.changed(file.path);
+  gulp.watch('build/css/index.css').on('change', livereload.changed);
+  gulp.watch('index.html').on('change', livereload.changed);
+
+});
+
+gulp.task('livereload', function() {
+  livereload.listen();
+});
+
+gulp.task('watchify', function() {
+
+  var b = browserify({
+      cache: {},
+      packageCache: {},
+      fullPaths: true,
+      debug: true
+    })
+    .add('./js/app.js');
+
+  var w = watchify(b)
+    .transform(to5)
+    .on('update', bundle);
+
+  function bundle() {
+    return w
+      .bundle()
+      .on('error', function (err) {
+        console.error( err.stack );
+      })
+      .pipe(source('app.js'))
+      .pipe(transform(function () { return mold.transformSourcesRelativeTo('./'); }))
+      .pipe(transform(function () { return exorcist('build/js/app.js.map'); }))
+      .pipe(gulp.dest('build/js'))
+      .pipe(livereload({ auto: false }));
   }
 
-  gulp.watch('index.js', ['browserify']);
-
-  gulp.watch('build/*').on('change', reload);
-  gulp.watch('css/index.css').on('change', reload);
-  gulp.watch('index.html').on('change', reload);
+  return bundle();
 
 });
 
-gulp.task('browserify', function () {
+gulp.task('browserify', function() {
 
-  return browserify('./js/app.js')
+  return browserify({
+      debug: true
+    })
+    .add('./js/app.js')
+    .transform(to5)
     .bundle()
-    .pipe(source('index.js'))
-    .pipe(buffer())
-    .pipe(gulp.dest('./build'))
-    .pipe(rename({extname: '.min.js'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('./build'));
+    .on('error', function (err) {
+      console.error( err.stack );
+    })
+    .pipe(source('app.js'))
+    .pipe(transform(function () { return mold.transformSourcesRelativeTo('./'); }))
+    .pipe(transform(function () { return exorcist('build/js/app.js.map'); }))
+    .pipe(gulp.dest('build/js'));
 
 });
 
-gulp.task('css', function () {
+gulp.task('vendor-css', function () {
 
-  return gulp.src([
-      './node_modules/bootstrap/dist/css/bootstrap.css',
-      './css/index.css'
-    ])
-    .pipe(concat('index.css'))
-    .pipe(gulp.dest('./build'))
-    .pipe(minifyCSS())
-    .pipe(rename({extname: '.min.css'}))
-    .pipe(gulp.dest('./build'));
+  gulp.src([
+    'node_modules/normalize.css/normalize.css',
+    'node_modules/bootstrap/dist/css/bootstrap.css'
+  ])
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(concat('vendor.css'))
+    .pipe(sourcemaps.write('./', {
+      includeContent: false
+    }))
+    .pipe( gulp.dest('build/css') );
 
 });
 
+gulp.task('sass', function () {
+
+  var build = gulp.src('./scss/index.scss')
+    .pipe(sourcemaps.init())
+      .pipe(sass({
+        outputStyle: 'compact',
+      }))
+    .pipe(sourcemaps.write({
+      sourceRoot: '../scss',
+      includeContent: false
+    }))
+    .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(prefix({
+        browsers: ['last 2 versions']
+      }))
+    .pipe(sourcemaps.write('./', {
+      sourceRoot: '../scss',
+      includeContent: false
+    }))
+    .pipe(gulp.dest('build/css'));
+
+});
+
+gulp.task('css', ['vendor-css', 'sass']);
 gulp.task('build', ['css', 'browserify']);
-
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build']);

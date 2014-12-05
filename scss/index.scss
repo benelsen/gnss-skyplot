@@ -1,0 +1,79 @@
+@media (min-width: 768px) {
+  .cont {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    margin: 0;
+  }
+}
+
+td, th {
+  text-align: right;
+  font-family: Source Code Pro, monospace;
+}
+
+span.degrees::after {
+  content: '°';
+}
+
+span.kilometre::after {
+  content: ' km';
+}
+
+td.inc.elevation::after {
+  content: ' ⬆︎';
+  color: #00ff00;
+}
+
+td.elevation::after {
+  content: ' ⬇︎';
+  color: #ff0000;
+}
+
+@media screen and (min-width: 330px) {
+
+  td.inc.range::after  {
+    content: ' +';
+  }
+
+  td.range::after  {
+    content: ' -';
+  }
+
+  td.inc.azimuth::after {
+    content: ' ←';
+  }
+
+  td.azimuth::after {
+    content: ' →';
+  }
+
+}
+
+table.satellite-list {
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+form.settings {
+  max-width: 230px;
+}
+
+tr.visible {
+
+}
+
+tr.invisible {
+  background: #eee;
+  color: #666;
+  visibility: visible;
+}
+
+table.dop td, table.dop th {
+  text-align: center;
+}
+
+@import 'svg.scss';
