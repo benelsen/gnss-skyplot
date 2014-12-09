@@ -53,6 +53,7 @@ export default View.extend({
     '    <button type="button" class="btn btn-primary" data-hook="calculate">Calculate Positions</button>',
     '    <button type="button" class="btn btn-info" data-hook="locate">Locate Me</button>',
     '  </div>',
+    '  <span data-hook="look">',
     '  ',
     '</form>'
   ].join('\n'),
@@ -129,8 +130,13 @@ export default View.extend({
 
     'change input': 'change',
     'focus input': 'focus',
-    'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset'
+    'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
+    'click [data-hook=locate]': 'getUserLocation',
 
+  },
+
+  getUserLocation: function () {
+    app.user.getUserLocation();
   },
 
   focus: function (e) {

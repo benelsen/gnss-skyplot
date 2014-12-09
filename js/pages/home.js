@@ -19,7 +19,7 @@ export default View.extend({
   initialize: function () {
 
     this.skyplotView = new SkyplotView({
-      el: document.querySelector('svg[data-hook=skyplot]'),
+      el: this.queryByHook('skyplot'),
       collection: app.satellites
     });
 

@@ -7,15 +7,13 @@ import * as AmpersandState from 'ampersand-state';
 import * as localforage from 'localforage';
 import * as orb from 'orbjs';
 
-window.UTCtoGPS;
-
 window.localforage = localforage;
 
 localforage.config({
   name: 'skyplot'
 });
 
-localforage.clear();
+// localforage.clear();
 
 var GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
@@ -25,7 +23,7 @@ export default AmpersandState.extend({
 
     position: {
       type: 'array',
-      default: () => [11.5678, 48.15, 512]
+      default: () => [0, 0, 0]
     },
 
     animation: {
@@ -44,7 +42,7 @@ export default AmpersandState.extend({
 
     pulseRate: {
       type: 'number',
-      default: 2000
+      default: 1000
     },
 
   },
@@ -94,14 +92,12 @@ export default AmpersandState.extend({
 
     log.info('Initializing user');
 
-    this.load()
-      .then( () => this.getUserLocation() )
-      .then( () => this.save() );
-
     this.pulsar = setInterval( () => {
       this.trigger('pulse');
       this.trigger('change:time');
     }, this.pulseRate);
+
+    this.on('change', this.save.bind(this));
 
     this.on('change:pulseRate', () => {
 

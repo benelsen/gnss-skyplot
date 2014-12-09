@@ -36,8 +36,8 @@ export default Collection.extend({
       this.trigger('change:time');
     });
 
-    app.user.on('change:position change:timeOffset', () => {
-      log.info('User change event');
+    app.user.on('change:position change:timeOffset', (e) => {
+      log.info('User change event', e);
       this.update();
       setTimeout(() => {
         this.update( app.user.gpsTime + app.user.pulseRate / 1000 );
@@ -50,7 +50,7 @@ export default Collection.extend({
 
     // log.info('Calculating', app.user.gpsTime, t, silent);
 
-    this.map( function (s) {
+    this.forEach( function (s) {
       s.topocentricPosition( t, true, silent );
     });
     this.sort();
@@ -108,7 +108,7 @@ export default Collection.extend({
 
         if ( ephemerides && ephemerides.length !== 0 && Math.abs( app.user.gpsTime - ephemerides.epoch ) < 86400 ) {
 
-          log.info('Loaded ephemerides from local storage', ephemerides);
+          log.info('Loaded ephemerides from local storage', 'Age', Math.abs( app.user.gpsTime - ephemerides.epoch ), ephemerides);
           return ephemerides;
 
         }
@@ -139,11 +139,7 @@ export default Collection.extend({
 
         log.info('Loaded ephemerides');
 
-        this.reset(ephemerides.satellites);
-
-        log.info('Added ephemerides');
-
-        this.save();
+        return ephemerides;
 
       });
 
@@ -168,6 +164,7 @@ export default Collection.extend({
           sat.toa = ephemerides.toa;
           sat.year = ephemerides.year;
           sat.epoch = ephemerides.epoch;
+          sat.prn = 'G' + sat.prn;
 
         });
 

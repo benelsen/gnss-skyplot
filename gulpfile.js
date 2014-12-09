@@ -45,14 +45,14 @@ gulp.task('watchify', function() {
 
   var w = watchify(b)
     .transform(to5)
-    .on('update', bundle);
+    .on('update', bundle)
+    .on('error', function (err) {
+      console.error( err.stack );
+    });
 
   function bundle() {
     return w
       .bundle()
-      .on('error', function (err) {
-        console.error( err.stack );
-      })
       .pipe(source('app.js'))
       .pipe(transform(function () { return mold.transformSourcesRelativeTo('./'); }))
       .pipe(transform(function () { return exorcist('build/js/app.js.map'); }))
