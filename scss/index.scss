@@ -5,15 +5,19 @@ textarea {
   font-size: 16px;
 }
 
+.row {
+  margin-bottom: 1em;
+}
+
 @media (min-width: 768px) {
   .cont {
-    padding: 0;
+    // padding: 0;
   }
 }
 
 @media (max-width: 768px) {
   .row {
-    margin: 0;
+    // margin: 0;
   }
 }
 
@@ -62,11 +66,17 @@ td.elevation::after {
 
 table.satellite-list {
   margin: 0 auto;
-  max-width: 480px;
+  // max-width: 480px;
+}
+
+table.dop {
+  margin: 0 auto;
+  // max-width: 480px;
 }
 
 form.settings {
-  max-width: 230px;
+  max-width: 19em;
+  margin: 0 auto;
 }
 
 tr.visible {

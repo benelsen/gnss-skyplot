@@ -2,7 +2,6 @@
 /* Logging */
 import * as bows from 'bows';
 var log = bows('Satellites');
-
 import * as Collection from 'ampersand-collection';
 import * as localforage from 'localforage';
 
@@ -25,9 +24,6 @@ export default Collection.extend({
     this.on('reset', () => {
       log.info('Collection reset event', this.toJSON());
       this.update();
-      setTimeout(() => {
-        this.update( app.user.gpsTime + app.user.pulseRate / 1000 );
-      }, 0);
     });
 
     app.user.on('pulse', () => {
@@ -36,12 +32,19 @@ export default Collection.extend({
       this.trigger('change:time');
     });
 
-    app.user.on('change:position change:timeOffset', (e) => {
-      log.info('User change event', e);
+    app.user.on('change:position', (e) => {
+      log.info('User position change event', e);
       this.update();
-      setTimeout(() => {
-        this.update( app.user.gpsTime + app.user.pulseRate / 1000 );
-      }, 0);
+    });
+
+    app.user.on('change:timeOffset', (e) => {
+      log.info('User timeOffset change event', e);
+
+      this.fetch()
+      .then( (ephemerides) => {
+        this.reset(ephemerides.satellites);
+      });
+
     });
 
   },
@@ -164,11 +167,11 @@ export default Collection.extend({
           sat.toa = ephemerides.toa;
           sat.year = ephemerides.year;
           sat.epoch = ephemerides.epoch;
-          sat.prn = 'G' + sat.prn;
+          sat.prn = 'G' + pad(sat.prn, 2);
 
         });
 
-        log.info('Fetched and saved to local storage');
+        log.info('Fetched from API');
 
         return ephemerides;
 
@@ -177,3 +180,15 @@ export default Collection.extend({
   },
 
 });
+
+function pad(x, n, p) {
+
+  if ( !p ) {
+    p = '0'
+  }
+
+  x = x.toString();
+
+  return p.repeat( n - x.length ) + x;
+
+}

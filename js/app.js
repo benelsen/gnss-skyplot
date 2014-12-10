@@ -1,12 +1,12 @@
 /* global app */
 
 /* Polyfills */
-import 'fetch';
 import '6to5/polyfill';
+import 'isomorphic-fetch';
 
 /* Logging */
 try {
-  localStorage.debug = true; //['localhost', 'dev'].indexOf(document.domain) !== -1 ? true : false;
+  localStorage.debug = ['localhost', 'dev'].indexOf(document.domain) !== -1 ? true : false;
 } catch(e) {
   console.info(e);
 }
@@ -57,6 +57,7 @@ var app = {
       log.info('Added ephemerides');
 
       this.satellites.save();
+      this.user.getUserLocation();
 
     })
     .catch(function (err) {

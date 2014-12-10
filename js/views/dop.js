@@ -9,7 +9,7 @@ export default View.extend({
 
   template: function (context) {
     var html = [
-      '<table class="table table-condensed" data-hook="dop">',
+      '<table class="table table-condensed horizontal dop" data-hook="dop">',
       '  <thead>',
       '    <tr>',
       '      <th>GDOP</th>',

@@ -91,6 +91,8 @@ export default View.extend({
       // updateOrbitalPath.call(el, satellite, this.projection, this.path);
     });
 
+    app.user.on('change', this.updateSatellites.bind(this));
+
     svg.on('click', function (e) {
       svg.select('g.satellites .highlight').classed('highlight', false)
          .select('g.position circle').attr('r', 3);
@@ -171,9 +173,6 @@ export default View.extend({
 
 
     satellites
-      .classed('invisible', function (d) {
-        return d.elevation < -10;
-      })
       .each(function (d) {
         updateSat.call(d3.select(this), d, projection, path);
         updateOrbitalPath.call(d3.select(this), d, projection, path);
@@ -256,6 +255,10 @@ function updateSat (satellite, projection, path) {
 
   // log('update', satellite.prn);
 
+  this.classed('invisible', function (d) {
+    return satellite.elevation < 0;
+  })
+
   this.select('g.position')
     .attr('transform', function () {
 
@@ -280,7 +283,9 @@ function updateOrbitalPath (satellite, projection, path) {
 
   var positions = d3.time.minutes(prev, next, 10)
     .concat([prev, now, next])
-    .sort()
+    .sort(function (a, b) {
+      return a.getTime() > b.getTime() ? -1 : 1;
+    })
     .map(function (time) {
 
       var t = orb.time.UTCtoGPS( time.getTime() / 1000 ) - GPS_EPOCH_0 / 1000;
@@ -295,14 +300,14 @@ function updateOrbitalPath (satellite, projection, path) {
   this.select('path.future')
     .datum({
       type: "LineString",
-      coordinates: positions.filter((t) => t.time >= now).map((t) => t.position)
+      coordinates: positions.filter((t) => { return t.time >= now; }).map((t) => t.position)
     })
     .attr('d', path);
 
   this.select('path.past')
     .datum({
       type: "LineString",
-      coordinates: positions.filter((t) => t.time <= now).map((t) => t.position)
+      coordinates: positions.filter((t) => { return t.time <= now; }).map((t) => t.position)
     })
     .attr('d', path);
 
@@ -341,4 +346,3 @@ function updateOrbitalPath (satellite, projection, path) {
   });
 
 }
-

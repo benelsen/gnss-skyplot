@@ -88,7 +88,11 @@ export default AmpersandState.extend({
       t = app.user.gpsTime;
     }
 
-    var obs = app.user.position.map( orb.common.deg2rad );
+    var obs = [
+      orb.common.deg2rad( app.user.position[0] ),
+      orb.common.deg2rad( app.user.position[1] ),
+      app.user.position[2]
+    ];
 
     // Calculate Right Ascension at epoch t
     var rightAscension = this.rightAscension + this.rightAscensionDot * (t - this.t0);
