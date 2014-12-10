@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# 2014-12-10:v1
+
+index.html
+
+build/js/app.min.js
+
+build/css/index.min.css
+build/css/vendor.min.css
+build/css/vendor.min.css
+
+apple-touch-icon@3x.png
+
+NETWORK:
+*
