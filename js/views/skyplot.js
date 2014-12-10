@@ -336,7 +336,9 @@ function updateOrbitalPath (satellite, projection, path) {
     .data( hours )
     .enter()
     .append('text')
-    .attr('x', '0.5em')
+    .attr('x', '0.5em');
+
+  timeTicks.selectAll('text')
     .text(function (h) {
       return timeFormat(h.time);
     });
