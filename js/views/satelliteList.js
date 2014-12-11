@@ -15,6 +15,7 @@ export default View.extend({
       '<table data-hook="satellite-list" class="table table-condensed horizontal satellite-list">',
       ' <thead>',
       '   <tr>',
+      // '     <th data-hook="health"></th>',
       '     <th data-hook="prn">PRN</th>',
       '     <th data-hook="elevation">Elevation</th>',
       '     <th data-hook="azimuth">Azimuth</th>',

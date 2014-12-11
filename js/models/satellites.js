@@ -72,7 +72,7 @@ export default Collection.extend({
 
     this.forEach(function (sat) {
 
-      if ( sat.elevation < 0 ) return;
+      if ( sat.elevation < 0 || !sat.healthy ) return;
 
       let x = sat.topocentric;
       let r = sat.range;

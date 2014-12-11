@@ -34,14 +34,28 @@ span.kilometre::after {
   content: ' km';
 }
 
+td.prn::before {
+  // display: none;
+  content: '● ';
+  // content: '⬤';
+}
+
+.healthy td.prn::before {
+  color: #00cc00;
+}
+
+.unhealthy td.prn::before {
+  color: #ff3300;
+}
+
 td.inc.elevation::after {
   content: ' ⬆︎';
-  color: #00ff00;
+  color: #00cc00;
 }
 
 td.elevation::after {
   content: ' ⬇︎';
-  color: #ff0000;
+  color: #ff3300;
 }
 
 @media screen and (min-width: 330px) {

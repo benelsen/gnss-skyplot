@@ -55,6 +55,13 @@ export default AmpersandState.extend({
 
   derived: {
 
+    healthy: {
+      deps: ['health'],
+      fn: function () {
+        return this.health === 0;
+      }
+    },
+
     period: {
       deps: ['semimajorAxis'],
       fn: function () {

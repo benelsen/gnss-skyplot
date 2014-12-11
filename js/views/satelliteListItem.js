@@ -10,7 +10,8 @@ export default View.extend({
 
   template: [
     '<tr>',
-    '  <td data-hook="prn"></td>',
+    // '  <td data-hook="health" class="health"></td>',
+    '  <td data-hook="prn" class="prn"></td>',
     '  <td data-hook="elevation" class="elevation"><span class="degrees"></span></td>',
     '  <td data-hook="azimuth" class="azimuth"><span class="degrees"></span></td>',
     '  <td data-hook="range" class="range"><span class="kilometre"></span></td>',
@@ -21,6 +22,13 @@ export default View.extend({
 
     'model.prn': {
       hook: 'prn'
+    },
+
+    'model.healthy':  {
+      type: 'booleanClass',
+      selector: 'tr',
+      yes: 'healthy',
+      no: 'unhealthy'
     },
 
     'model.visible':  {
