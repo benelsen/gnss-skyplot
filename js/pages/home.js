@@ -33,10 +33,10 @@ export default View.extend({
       model: app.user
     });
 
-    // this.dopView = new DOPView({
-    //   el: document.querySelector('[data-hook=dop]'),
-    //   collection: app.satellites
-    // });
+    this.dopView = new DOPView({
+      el: document.querySelector('[data-hook=dop]'),
+      model: app.user
+    });
 
   },
 
@@ -51,8 +51,8 @@ export default View.extend({
     this.registerSubview(this.settingsView);
     this.settingsView.render();
 
-    // this.registerSubview(this.dopView);
-    // this.dopView.render();
+    this.registerSubview(this.dopView);
+    this.dopView.render();
 
   }
 

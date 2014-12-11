@@ -45,6 +45,14 @@ export default AmpersandState.extend({
       default: 1000
     },
 
+    metadata: {
+      type: 'object',
+    },
+
+    dop: {
+      type: 'object',
+    },
+
   },
 
   derived: {
@@ -97,7 +105,7 @@ export default AmpersandState.extend({
       this.trigger('change:time');
     }, this.pulseRate);
 
-    this.on('change', this.save.bind(this));
+    this.on('change:location', this.save.bind(this));
 
     this.on('change:pulseRate', () => {
 

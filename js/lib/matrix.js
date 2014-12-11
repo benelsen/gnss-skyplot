@@ -109,13 +109,10 @@ export function transpose (A) {
   var C = matrix(A[0].length, A.length);
   var tmp;
 
-  for (var i = 0; i < A.length; i++) {
+  for (var i = 0; i < A[0].length; i++) {
 
-    C[i][i] = A[i][i];
+    for (var j = 0; j < A.length; j++) {
 
-    for (var j = i+1; j < A[0].length; j++) {
-
-      C[j][i] = A[i][j];
       C[i][j] = A[j][i];
 
     }

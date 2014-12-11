@@ -35,6 +35,35 @@ export default View.extend({
   events: {
   },
 
+  bindings: {
+
+    'model.dop.gdop': {
+      hook: 'gdop',
+      type: setToFixed.bind(null, 2)
+    },
+
+    'model.dop.pdop': {
+      hook: 'pdop',
+      type: setToFixed.bind(null, 2)
+    },
+
+    'model.dop.hdop': {
+      hook: 'hdop',
+      type: setToFixed.bind(null, 2)
+    },
+
+    'model.dop.vdop': {
+      hook: 'vdop',
+      type: setToFixed.bind(null, 2)
+    },
+
+    'model.dop.tdop': {
+      hook: 'tdop',
+      type: setToFixed.bind(null, 2)
+    },
+
+  },
+
   render: function () {
 
     this.renderWithTemplate();
@@ -42,3 +71,8 @@ export default View.extend({
   },
 
 });
+
+function setToFixed (n, el, value) {
+  if ( !value ) return;
+  el.textContent = value.toFixed(n);
+}

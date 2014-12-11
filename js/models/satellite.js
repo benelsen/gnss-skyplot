@@ -45,6 +45,10 @@ export default AmpersandState.extend({
 
     range: {
       type: 'number', default: 0
+    },
+
+    topocentric: {
+      type: 'array'
     }
 
   },
@@ -94,9 +98,12 @@ export default AmpersandState.extend({
       app.user.position[2]
     ];
 
+    // All elements of the almanac are expressed relative to epoch T0,
+    // except the right ascension which is relative to t0.
     // Calculate Right Ascension at epoch t
     var rightAscension = this.rightAscension + this.rightAscensionDot * (t - this.t0);
 
+    // Position in Earth Centric Inertial frame (X,Y,Z)
     var xECI = orb.position.simple( this.semimajorAxis,
                                     this.eccentricity,
                                     this.inclination,
@@ -106,8 +113,15 @@ export default AmpersandState.extend({
                                     this.T0,
                                     this.meanAnomaly )[0];
 
+    // Position in Earth Centric Earth Fixed frame (X,Y,Z)
     var xECEF = orb.transformations.inertialToFixed(xECI, t - this.t0);
+
+    // Position in Topocentric frame (X,Y,Z)
     var xTopo = orb.transformations.fixedToTopocentric(xECEF, obs, orb.constants.earth.wgs84.a, orb.constants.earth.wgs84.e);
+
+    this.set('topocentric', xTopo, {silent: true});
+
+    // Position in Horizontal frame (azimuth, elevation, distance)
     var xHorz = orb.transformations.topocentricToHorizontal(xTopo);
 
     var position = {

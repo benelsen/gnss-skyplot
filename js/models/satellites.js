@@ -5,6 +5,8 @@ var log = bows('Satellites');
 import * as Collection from 'ampersand-collection';
 import * as localforage from 'localforage';
 
+import * as matrix from './../lib/matrix';
+
 import Satellite from './satellite';
 
 export default Collection.extend({
@@ -57,6 +59,39 @@ export default Collection.extend({
       s.topocentricPosition( t, true, silent );
     });
     this.sort();
+
+    this.dop();
+
+  },
+
+  dop: function () {
+
+    if ( this.length === 0 ) return;
+
+    let U = [];
+
+    this.forEach(function (sat) {
+
+      if ( sat.elevation < 0 ) return;
+
+      let x = sat.topocentric;
+      let r = sat.range;
+
+      U.push([ 1, x[0] / r, x[1] / r, x[2] / r ]);
+
+    });
+
+    let dop = matrix.invert( matrix.mult(matrix.transpose(U), U) );
+
+    app.user.dop = {
+      gdop: Math.sqrt( dop[0][0] + dop[1][1] + dop[2][2] + dop[3][3] ),
+      tdop: Math.sqrt( dop[0][0] ),
+      pdop: Math.sqrt( dop[1][1] + dop[2][2] + dop[3][3] ),
+      hdop: Math.sqrt( dop[1][1] + dop[2][2] ),
+      vdop: Math.sqrt( dop[3][3] ),
+      xdop: Math.sqrt( dop[1][1] ),
+      ydop: Math.sqrt( dop[2][2] )
+    };
 
   },
 

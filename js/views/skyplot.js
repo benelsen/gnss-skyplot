@@ -91,7 +91,7 @@ export default View.extend({
       // updateOrbitalPath.call(el, satellite, this.projection, this.path);
     });
 
-    app.user.on('change', this.updateSatellites.bind(this));
+    app.user.on('change:location change:timeOffset', this.updateSatellites.bind(this));
 
     svg.on('click', function (e) {
       svg.select('g.satellites .highlight').classed('highlight', false)
