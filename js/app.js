@@ -6,7 +6,13 @@ import 'isomorphic-fetch';
 
 /* Logging */
 try {
-  localStorage.debug = ['localhost', 'dev'].indexOf(document.domain) !== -1 ? true : false;
+
+  if ( ['localhost', 'dev'].indexOf(document.domain) !== -1 ) {
+    localStorage.setItem('debug', true);
+  } else {
+    localStorage.removeItem('debug')
+  }
+
 } catch(e) {
   console.info(e);
 }
