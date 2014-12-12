@@ -33,6 +33,15 @@ gulp.task('livereload', function() {
   livereload.listen();
 });
 
+function bundle(w) {
+  w.bundle()
+    .pipe(source('app.js'))
+    .pipe(transform(function () { return mold.transformSourcesRelativeTo('./'); }))
+    .pipe(transform(function () { return exorcist('build/js/app.js.map'); }))
+    .pipe(gulp.dest('build/js'))
+    .pipe(livereload({ auto: false }));
+}
+
 gulp.task('watchify', function() {
 
   var b = browserify({
@@ -40,27 +49,21 @@ gulp.task('watchify', function() {
       packageCache: {},
       fullPaths: true,
       debug: true
-    })
-    .add('./js/app.js');
+    });
 
-  var w = watchify(b)
-    .transform(to5)
-    .on('update', bundle)
+  var w = watchify(b);
+
+  w.transform(to5)
+    .on('update', function () {
+      bundle(w);
+    })
     .on('error', function (err) {
       console.error( err.stack );
     });
 
-  function bundle() {
-    return w
-      .bundle()
-      .pipe(source('app.js'))
-      .pipe(transform(function () { return mold.transformSourcesRelativeTo('./'); }))
-      .pipe(transform(function () { return exorcist('build/js/app.js.map'); }))
-      .pipe(gulp.dest('build/js'))
-      .pipe(livereload({ auto: false }));
-  }
+  w.add('./js/app.js');
 
-  return bundle();
+  bundle(w);
 
 });
 
