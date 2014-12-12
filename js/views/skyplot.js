@@ -83,15 +83,14 @@ export default View.extend({
 
     this.collection.on('reset', this.updateSatellites.bind(this) );
 
-    this.collection.on('change', (satellite) => {
+    this.collection.on('change', (satellite, e) => {
 
       var el = d3.select('g.satellites g.satellite[data-prn=prn'+satellite.prn+']');
       updateSat.call(el, satellite, this.projection, this.path);
 
-      // updateOrbitalPath.call(el, satellite, this.projection, this.path);
     });
 
-    app.user.on('change:location change:timeOffset', this.updateSatellites.bind(this));
+    app.user.on('change:position change:timeOffset', this.updateSatellites.bind(this));
 
     svg.on('click', function (e) {
       svg.select('g.satellites .highlight').classed('highlight', false)
