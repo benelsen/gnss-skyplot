@@ -8,6 +8,9 @@ build/js/app.min.js
 build/css/index.min.css
 build/css/vendor.min.css
 
+fonts/SourceCodePro/SourceCodePro-Regular.otf.woff
+fonts/SourceCodePro/SourceCodePro-Bold.otf.woff
+
 apple-touch-icon@3x.png
 
 NETWORK:
