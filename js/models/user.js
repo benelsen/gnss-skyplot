@@ -105,7 +105,7 @@ export default AmpersandState.extend({
       this.trigger('change:time');
     }, this.pulseRate);
 
-    this.on('change:location', this.save.bind(this));
+    this.on('change:position', this.save.bind(this));
 
     this.on('change:pulseRate', () => {
 
