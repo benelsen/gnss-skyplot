@@ -185,7 +185,13 @@ export default Collection.extend({
 
   fetch: function () {
 
-    return fetch( 'https://benelsen.com/gps-skyplot/api/almanac/' + app.user.gpsTime )
+    var url = 'https://benelsen.com/gps-skyplot/api/almanac/';
+
+    if ( app.user.timeOffset !== 0 ) {
+      url += app.user.gpsTime;
+    }
+
+    return fetch( url )
       .then( function ( response ) {
         return response.json();
       })
