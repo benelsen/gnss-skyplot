@@ -6,6 +6,7 @@ var log = bows('Skyplot');
 import * as View from 'ampersand-view';
 
 import * as d3 from 'd3';
+import * as _ from 'underscore';
 import * as orb from 'orbjs';
 
 window.orb = orb;
@@ -79,7 +80,7 @@ export default View.extend({
       .enter().append('g')
         .attr('class', 'satellite');
 
-    window.addEventListener('resize', this.render.bind(this), false );
+    window.addEventListener('resize', _.debounce(this.render.bind(this), 200, true), false );
 
     this.collection.on('reset', this.updateSatellites.bind(this) );
 

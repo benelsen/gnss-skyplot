@@ -11,25 +11,22 @@ textarea {
   margin-bottom: 1em;
 }
 
-@media (min-width: 768px) {
-  .cont {
-    // padding: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .row {
-    // margin: 0;
-  }
-}
-
-th {
-  text-align: center;
-}
+// .row:nth-of-type(n+2) {
+//   max-width: 800px;
+//   margin: 0 auto;
+// }
 
 td, th {
   text-align: right;
-  font-family: Source Code Pro, serif;
+  font-family: Source Code Pro, monospace;
+}
+
+@media screen and (max-width: 400px) {
+
+  th {
+    text-align: center;
+  }
+
 }
 
 span.degrees::after {
@@ -41,9 +38,7 @@ span.kilometre::after {
 }
 
 td.prn::before {
-  // display: none;
   content: '● ';
-  // content: '⬤';
 }
 
 .healthy td.prn::before {
@@ -86,12 +81,10 @@ td.elevation::after {
 
 table.satellite-list {
   margin: 0 auto;
-  // max-width: 480px;
 }
 
 table.dop {
   margin: 0 auto;
-  // max-width: 480px;
 }
 
 form.settings {
