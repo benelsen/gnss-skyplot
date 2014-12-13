@@ -1,4 +1,6 @@
 
+@import 'fonts.scss';
+
 input[type='text'],
 input[type='number'],
 textarea {
@@ -21,9 +23,13 @@ textarea {
   }
 }
 
+th {
+  text-align: center;
+}
+
 td, th {
   text-align: right;
-  font-family: Source Code Pro, monospace;
+  font-family: Source Code Pro, serif;
 }
 
 span.degrees::after {

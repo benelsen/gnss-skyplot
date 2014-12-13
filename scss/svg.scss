@@ -9,7 +9,7 @@ svg {
   width: 100%;
   height: 100vmin;
 
-  max-height: 700px;
+  max-height: 600px;
 
   path {
     fill: none;
@@ -72,9 +72,7 @@ svg {
 
     @media screen and (min-width: 480px) and (min-height: 480px) {
       .position text {
-        // font-family: monospace;
         font-weight: bold;
-        // font-size: 0.85em;
       }
     }
 
@@ -100,19 +98,6 @@ svg {
 
     path {
       visibility: visible;
-    }
-
-    // path.future {
-    //   stroke: #0f0;
-    //   stroke-width: 1.2px;
-    //   stroke-opacity: 1;
-    // }
-
-    path.past {
-      // animation: dash 5s linear infinite;
-      // stroke: #f00;
-      // stroke-width: 1.2px;
-      // stroke-opacity: 1;
     }
 
     .ticks--time circle {
