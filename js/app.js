@@ -53,7 +53,7 @@ var app = {
 
     Promise.all([
       this.user.load(),
-      this.satellites.load.call(this.satellites)
+      this.satellites.load()
     ])
     .then( (result) => {
 
@@ -63,7 +63,7 @@ var app = {
       log.info('Added ephemerides');
 
       this.satellites.save();
-      this.user.getUserLocation();
+      this.user.getLocationFromAPI();
 
     })
     .catch(function (err) {

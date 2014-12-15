@@ -23,7 +23,7 @@ export default View.extend({
     '    </div>',
     '  </div>',
     '  ',
-    '  <div class="row">',
+    '  <div class="row coordinates">',
     '    <div class="col-xs-4">',
     '      <label for="inputLatitude" class="control-label">Latitude</label>',
     '      <input type="text" class="form-control" data-hook="latitude" id="inputLatitude" value="48.15">', // min="-90" max="90" step="0.05"
@@ -41,20 +41,15 @@ export default View.extend({
     '  </div>',
     '  ',
     '  <div class="form-group row">',
-    // '    <button type="button" class="btn btn-primary" data-hook="calculate">Calculate Positions</button>',
     '    <button type="button" class="btn btn-primary col-xs-4" data-hook="locate">Locate Me</button>',
     '  </div>',
-    // '  ',
-    // '  <div class="form-group">',
-    // '    <label class="control-label">Transitions',
-    // '      <input type="checkbox" data-hook="animation">',
-    // '    </label>',
-    // '  </div>',
-    // '  <div class="form-group">',
-    // '    <label class="control-label">Update rate',
-    // '      <input type="number" data-hook="update-rate" value=2 min=1 max=60 step=1>',
-    // '    </label>',
-    // '  </div>',
+    '  ',
+    '  <div class="form-group input-group row share inactive" data-hook="share">',
+    '    <span class="input-group-btn">',
+    '      <button type="button" class="btn btn-primary">Share with this location</button>',
+    '    </span>',
+    '    <input type="text" class="form-control">',
+    '  </div>',
     '  ',
     '</form>'
   ].join('\n'),
@@ -133,11 +128,33 @@ export default View.extend({
     'focus input': 'focus',
     'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
     'click [data-hook=locate]': 'getUserLocation',
+    'click [data-hook=share]': 'share'
+
+  },
+
+  share: function () {
+
+    var el = this.queryByHook('share');
+
+    el.querySelector('button').textContent = 'Share';
+
+    el.classList.remove('inactive');
+
+    document.location.hash = 'location=' + [
+      app.user.position[0].toFixed(4),
+      app.user.position[1].toFixed(4),
+      app.user.position[2].toFixed(1)
+    ].join(',');
+
+    var input = el.querySelector('input');
+
+    input.value = document.location.href;
+    input.select();
 
   },
 
   getUserLocation: function () {
-    app.user.getUserLocation();
+    app.user.getLocationFromAPI();
   },
 
   focus: function (e) {

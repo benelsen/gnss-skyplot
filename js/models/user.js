@@ -152,7 +152,18 @@ export default AmpersandState.extend({
 
   },
 
-  getUserLocation: function () {
+  getLocationFromHash: function () {
+
+    var match = /location=([\d.]+)\,([\d.]+)\,([\d.]+)/.exec(document.location.hash);
+    if ( match ) {
+      return match.slice(1,4).map(Number);
+    }
+
+    return null;
+
+  },
+
+  getLocationFromAPI: function () {
 
     log.info('Trying to get the user’s location from geolocation API');
 
