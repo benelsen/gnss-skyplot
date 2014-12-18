@@ -8,78 +8,16 @@ import * as View from 'ampersand-view';
 import * as moment from 'moment';
 // import * as sexagesimal from 'sexagesimal';
 
-export default View.extend({
+import * as removeClass from 'amp-remove-class';
 
-  template: [
-    '<form class="form-horizontal settings" data-hook="form">',
-    '  ',
-    '  <div class="form-group">',
-    '    <label for="inputDate" class="control-label">Time (yyyy-mm-dd hh:mm:ss offset)</label>',
-    '    <div class="input-group">',
-    '      <input type="text" class="form-control" data-hook="time" id="inputDate" placeholder="yyyy-mm-dd hh:mm:ss +0000">',
-    '      <span class="input-group-btn">',
-    '        <button class="btn btn-primary" data-hook="zeroTimeOffset" type="button">Now</button>',
-    '      </span>',
-    '    </div>',
-    '  </div>',
-    '  ',
-    '  <div class="row coordinates">',
-    '    <div class="col-xs-4">',
-    '      <label for="inputLatitude" class="control-label">Latitude</label>',
-    '      <input type="text" class="form-control" data-hook="latitude" id="inputLatitude" value="48.15">', // min="-90" max="90" step="0.05"
-    '    </div>',
-    '    ',
-    '    <div class="col-xs-4">',
-    '      <label for="inputLongitude" class="control-label">Longitude</label>',
-    '      <input type="text" class="form-control" data-hook="longitude" id="inputLongitude" value="11.567">', // min="-180" max="180" step="0.05"
-    '    </div>',
-    '    ',
-    '    <div class="col-xs-4">',
-    '      <label for="inputHeight" class="control-label">Height</label>',
-    '      <input type="text" class="form-control" data-hook="height" id="inputHeight" value="520.0">', // min="-6378136" max="20000000"
-    '    </div>',
-    '  </div>',
-    '  ',
-    '  <div class="form-group row">',
-    '    <button type="button" class="btn btn-primary col-xs-4" data-hook="locate">Locate Me</button>',
-    '  </div>',
-    '  ',
-    '  <div class="form-group input-group row share inactive" data-hook="share">',
-    '    <span class="input-group-btn">',
-    '      <button type="button" class="btn btn-primary">Share with this location</button>',
-    '    </span>',
-    '    <input type="text" class="form-control">',
-    '  </div>',
-    '  ',
-    '</form>'
-  ].join('\n'),
+export default View.extend({
 
   bindings: {
 
     'model.time': {
       type: function (el, value, prevValue) {
-
         if ( el === document.activeElement ) return;
-
-        if ( app.user.animation ) {
-
-          d3.select(el)
-            .interrupt().transition()
-            .duration(app.user.pulseRate)
-            .ease('linear')
-            .tween('value', function () {
-              var interpolate = d3.interpolateNumber(value, value+app.user.pulseRate);
-              return function (t) {
-                this.value = moment.utc( interpolate(t) ).format('YYYY-MM-DD HH:mm:ss ZZ');
-              }
-            });
-
-        } else {
-
-          el.value = moment.utc( value ).format('YYYY-MM-DD HH:mm:ss ZZ');
-
-        }
-
+        el.value = moment.utc( value ).format('YYYY-MM-DD HH:mm:ss ZZ');
       },
       hook: 'time'
     },
@@ -128,7 +66,7 @@ export default View.extend({
     'focus input': 'focus',
     'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
     'click [data-hook=locate]': 'getUserLocation',
-    'click [data-hook=share]': 'share'
+    'click [data-hook=share] button': 'share'
 
   },
 
@@ -138,11 +76,11 @@ export default View.extend({
 
     el.querySelector('button').textContent = 'Share';
 
-    el.classList.remove('inactive');
+    removeClass(el, 'inactive');
 
     document.location.hash = 'location=' + [
-      app.user.position[0].toFixed(4),
-      app.user.position[1].toFixed(4),
+      app.user.position[0].toFixed(5),
+      app.user.position[1].toFixed(5),
       app.user.position[2].toFixed(1)
     ].join(',');
 
@@ -203,7 +141,7 @@ export default View.extend({
   },
 
   render: function () {
-    this.renderWithTemplate();
+    // this.renderWithTemplate();
   }
 
 });

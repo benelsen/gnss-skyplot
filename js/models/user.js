@@ -15,7 +15,7 @@ localforage.config({
 
 // localforage.clear();
 
-var GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
+const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
 export default AmpersandState.extend({
 

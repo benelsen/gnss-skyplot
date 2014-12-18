@@ -6,23 +6,11 @@ var log = bows('Skyplot');
 import * as View from 'ampersand-view';
 
 import * as d3 from 'd3';
-import * as _ from 'underscore';
 import * as orb from 'orbjs';
 
-window.orb = orb;
-
-var GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
+const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
 export default View.extend({
-
-  template: function (context) {
-    var html = [
-      '<svg data-hook="skyplot">',
-      '</svg>',
-    ].join('\n');
-
-    return html;
-  },
 
   events: {
   },
@@ -80,7 +68,7 @@ export default View.extend({
       .enter().append('g')
         .attr('class', 'satellite');
 
-    window.addEventListener('resize', _.debounce(this.render.bind(this), 200, true), false );
+    window.addEventListener('resize', this.render.bind(this), false );
 
     this.collection.on('reset', this.updateSatellites.bind(this) );
 

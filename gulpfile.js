@@ -48,7 +48,7 @@ function bundle() {
     .pipe(source('app.js'))
       .pipe(buffer())
       .pipe( sourcemaps.init({loadMaps: true}) )
-      .pipe( sourcemaps.write('./', {sourceRoot: '/js'}) )
+      .pipe( sourcemaps.write('./', {sourceRoot: './js'}) )
     .pipe(gulp.dest('build/js'));
 
 }
@@ -122,7 +122,7 @@ gulp.task('sass', function () {
         browsers: ['last 2 versions']
       }))
     .pipe(sourcemaps.write('./', {
-      sourceRoot: '../../scss',
+      sourceRoot: '../scss',
       includeContent: false
     }))
     .pipe(gulp.dest('build/css'));
