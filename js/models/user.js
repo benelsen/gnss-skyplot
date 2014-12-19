@@ -152,14 +152,15 @@ export default AmpersandState.extend({
 
   },
 
-  getLocationFromHash: function () {
+  setLocationFromHash: function () {
 
-    var match = /location=([\d.]+)\,([\d.]+)\,([\d.]+)/.exec(document.location.hash);
-    if ( match ) {
-      return match.slice(1,4).map(Number);
+    var locationMatch = /location=([\d.]+)\,([\d.]+)\,([\d.]+)/.exec(document.location.hash);
+    if ( locationMatch ) {
+      this.location = locationMatch.slice(1,4).map(Number);
+      return true;
     }
 
-    return null;
+    return false;
 
   },
 

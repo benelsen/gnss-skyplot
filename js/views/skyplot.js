@@ -88,6 +88,67 @@ export default View.extend({
 
   },
 
+  render: function (e) {
+
+    log('render', e);
+
+    var {width, height} = this.el.getClientRects()[0];
+
+    log(width, height);
+
+    var scale = Math.min(width,height) * .44;
+
+    var projection = this.projection
+      .scale(scale)
+      .translate([width / 2 + .5, height / 2 + .5]);
+
+    var svg = d3.select(this.el);
+
+    svg.select('path.graticule').attr('d', this.path);
+    svg.select('path.horizon').attr('d', this.path);
+
+    var ticksAzimuth = svg.select('g.ticks.ticks--azimuth');
+
+    ticksAzimuth.selectAll('line')
+        .each(function(d) {
+          var p0 = projection([d, 0]),
+              p1 = projection([d, d % 10 ? -1 : -2]);
+
+          d3.select(this)
+            .attr('x1', p0[0]).attr('y1', p0[1])
+            .attr('x2', p1[0]).attr('y2', p1[1]);
+        });
+
+    ticksAzimuth.selectAll('text')
+        .each(function(d) {
+          var p = projection([d, -5]);
+
+          d3.select(this)
+            .attr('x', p[0])
+            .attr('y', p[1]);
+        })
+        .attr('transform', function (d) {
+
+          var r = d % 90 === 0 ? 0 : ( (d+90) % 180 ) - 90;
+
+          return 'rotate(' + r + ', ' + d3.select(this).attr('x') + ', ' + d3.select(this).attr('y') + ')';
+        });
+
+    svg.selectAll('g.ticks.ticks--elevation text')
+        .each(function(d) {
+          var p = projection([0, d]);
+
+          d3.select(this)
+              .attr('x', p[0])
+              .attr('y', p[1]);
+        })
+        .attr('dy', '.35em')
+        .text(function(d) { return d + '°'; });
+
+    this.updateSatellites();
+
+  },
+
   updateSatellites: function () {
 
     log('update all');
@@ -165,65 +226,6 @@ export default View.extend({
         updateSat.call(d3.select(this), d, projection, path);
         updateOrbitalPath.call(d3.select(this), d, projection, path);
       });
-
-  },
-
-  render: function (e) {
-
-    log('render', e);
-
-    var {width, height} = this.el.getClientRects()[0];
-
-    var scale = Math.min(width,height) * .44;
-
-    var projection = this.projection
-      .scale(scale)
-      .translate([width / 2 + .5, height / 2 + .5]);
-
-    var svg = d3.select(this.el);
-
-    svg.select('path.graticule').attr('d', this.path);
-    svg.select('path.horizon').attr('d', this.path);
-
-    var ticksAzimuth = svg.select('g.ticks.ticks--azimuth');
-
-    ticksAzimuth.selectAll('line')
-        .each(function(d) {
-          var p0 = projection([d, 0]),
-              p1 = projection([d, d % 10 ? -1 : -2]);
-
-          d3.select(this)
-            .attr('x1', p0[0]).attr('y1', p0[1])
-            .attr('x2', p1[0]).attr('y2', p1[1]);
-        });
-
-    ticksAzimuth.selectAll('text')
-        .each(function(d) {
-          var p = projection([d, -5]);
-
-          d3.select(this)
-            .attr('x', p[0])
-            .attr('y', p[1]);
-        })
-        .attr('transform', function (d) {
-
-          var r = d % 90 === 0 ? 0 : ( (d+90) % 180 ) - 90;
-
-          return 'rotate(' + r + ', ' + d3.select(this).attr('x') + ', ' + d3.select(this).attr('y') + ')';
-        });
-
-    svg.selectAll('g.ticks.ticks--elevation text')
-        .each(function(d) {
-          var p = projection([0, d]);
-
-          d3.select(this)
-              .attr('x', p[0])
-              .attr('y', p[1]);
-        })
-        .attr('dy', '.35em')
-        .text(function(d) { return d + '°'; });
-
-    this.updateSatellites();
 
   },
 

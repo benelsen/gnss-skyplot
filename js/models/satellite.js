@@ -49,6 +49,10 @@ export default AmpersandState.extend({
 
     topocentric: {
       type: 'array'
+    },
+
+    selected: {
+      type: 'boolean'
     }
 
   },

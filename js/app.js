@@ -7,15 +7,16 @@ import 'isomorphic-fetch';
 /* Logging */
 try {
 
-  if ( ['localhost', 'dev'].indexOf(document.domain) !== -1 ) {
+  if ( ['localhost', 'dev', '.local'].indexOf(document.domain) !== -1 ) {
     localStorage.setItem('debug', true);
   } else {
-    localStorage.removeItem('debug')
+    localStorage.removeItem('debug');
   }
 
 } catch(e) {
   console.info(e);
 }
+
 import * as bows from 'bows';
 var log = bows('App');
 
@@ -25,18 +26,13 @@ import * as AmpersandState from 'ampersand-state';
 import Satellites from './models/satellites';
 import User from './models/user';
 
-import MainView from './pages/home';
+import MainView from './views/main';
 
 var app = {
 
   inititalize: function () {
 
     window.app = this;
-
-    // window.onerror = function (err) {
-    //   console.error(err);
-    //   console.error(err.stack);
-    // }
 
     this.user = new User();
     this.satellites = new Satellites();
@@ -57,17 +53,15 @@ var app = {
     ])
     .then( (result) => {
 
-      var ephemerides = result[1];
+      if ( ! this.user.setLocationFromHash() ) {
+        this.user.getLocationFromAPI();
+      }
 
-      this.satellites.reset(ephemerides.satellites);
+      this.satellites.reset(result[1].satellites);
       log.info('Added ephemerides');
 
       this.satellites.save();
-      this.user.getLocationFromAPI();
 
-    })
-    .catch(function (err) {
-      throw err;
     });
 
   }
