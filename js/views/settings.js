@@ -16,7 +16,7 @@ export default View.extend({
 
     'model.time': {
       type: function (el, value, prevValue) {
-        if ( el === document.activeElement ) return;
+        if ( el.contains( document.activeElement ) ) return;
         el.value = moment.utc( value ).format('YYYY-MM-DD HH:mm:ss ZZ');
       },
       hook: 'time'
@@ -24,6 +24,7 @@ export default View.extend({
 
     'model.longitude': {
       type: function (el, value) {
+        if ( el.contains( document.activeElement ) ) return;
         // el.value = sexagesimal.format(value, 'lon'); //.toFixed(5);
         el.value = value.toFixed(5);
       },
@@ -32,6 +33,7 @@ export default View.extend({
 
     'model.latitude': {
       type: function (el, value) {
+        if ( el.contains( document.activeElement ) ) return;
         // el.value = sexagesimal.format(value, 'lat'); //.toFixed(5);
         el.value = value.toFixed(5);
       },
@@ -40,22 +42,10 @@ export default View.extend({
 
     'model.height': {
       type: function (el, value) {
+        if ( el.contains( document.activeElement ) ) return;
         el.value = value.toFixed(1);
       },
       hook: 'height'
-    },
-
-    'model.animation': {
-      type: 'booleanAttribute',
-      hook: 'animation',
-      name: 'checked'
-    },
-
-    'model.pulseRate': {
-      type: function (el, value) {
-        el.value = value/1000;
-      },
-      hook: 'update-rate'
     },
 
   },
@@ -63,7 +53,6 @@ export default View.extend({
   events: {
 
     'change input': 'change',
-    'focus input': 'focus',
     'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
     'click [data-hook=locate]': 'getUserLocation',
     'click [data-hook=share] button': 'share'
@@ -72,9 +61,12 @@ export default View.extend({
 
   share: function () {
 
-    var el = this.queryByHook('share');
+    log('share');
 
-    el.querySelector('button').textContent = 'Share';
+    var el = this.queryByHook('share');
+    var btn = el.querySelector('button');
+
+    btn.textContent = 'Share';
 
     removeClass(el, 'inactive');
 
@@ -95,14 +87,9 @@ export default View.extend({
     app.user.getLocationFromAPI();
   },
 
-  focus: function (e) {
-
-    d3.select(e.target).interrupt();
-    d3.select(e.target).select('span').interrupt();
-
-  },
-
   change: function (e) {
+
+    log('change');
 
     var index = ['longitude', 'latitude', 'height'].indexOf(e.target.dataset.hook);
 
@@ -141,6 +128,8 @@ export default View.extend({
   },
 
   render: function () {
+
+    log('render');
     // this.renderWithTemplate();
   }
 

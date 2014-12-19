@@ -53,14 +53,18 @@ var app = {
     ])
     .then( (result) => {
 
-      if ( ! this.user.setLocationFromHash() ) {
-        this.user.getLocationFromAPI();
-      }
+      domReady( () => {
 
-      this.satellites.reset(result[1].satellites);
-      log.info('Added ephemerides');
+        if ( ! this.user.setLocationFromHash() ) {
+          this.user.getLocationFromAPI();
+        }
 
-      this.satellites.save();
+        this.satellites.reset(result[1].satellites);
+        log.info('Added ephemerides');
+
+        this.satellites.save();
+
+      });
 
     });
 
