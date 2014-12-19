@@ -139,11 +139,6 @@ td.elevation::after {
 
 table.satellite-list {
   margin: 0 auto;
-
-  @media screen and (max-width: 320px) {
-    font-size: 13px;
-  }
-
 }
 
 table.dop {

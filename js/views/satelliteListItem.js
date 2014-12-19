@@ -58,7 +58,7 @@ export default View.extend({
       type: function (el, value, prevValue) {
         prevValue *= 1e-3;
         value *= 1e-3;
-        el.querySelector('span').textContent = value.toFixed(1);
+        el.querySelector('span').textContent = value.toFixed(0);
         toggleClass(el, 'inc', prevValue && prevValue && value > prevValue);
       },
       hook: 'range'
