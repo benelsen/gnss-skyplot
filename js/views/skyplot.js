@@ -10,6 +10,8 @@ import * as orb from 'orbjs';
 
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
+var i = 0;
+
 export default View.extend({
 
   events: {
@@ -94,15 +96,22 @@ export default View.extend({
 
     var {width, height} = this.el.getClientRects()[0];
 
+    var svg = d3.select(this.el);
+
+    if ( e && width == svg.attr('width') && height == svg.attr('height') ) {
+      return;
+    }
+
     log(width, height);
+
+    svg.attr('width', width)
+       .attr('height', height);
 
     var scale = Math.min(width,height) * .44;
 
     var projection = this.projection
       .scale(scale)
       .translate([width / 2 + .5, height / 2 + .5]);
-
-    var svg = d3.select(this.el);
 
     svg.select('path.graticule').attr('d', this.path);
     svg.select('path.horizon').attr('d', this.path);
