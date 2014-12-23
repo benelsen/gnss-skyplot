@@ -41,6 +41,14 @@ td, th {
 
 form.settings {
 
+  .alert {
+    padding: 10px;
+  }
+
+  .row {
+    padding: 0 15px;
+  }
+
   .row > div {
 
     label {
@@ -145,10 +153,10 @@ table.dop {
   margin: 0 auto;
 }
 
-form.settings {
-  max-width: 19em;
-  margin: 0 auto;
-}
+// form.settings {
+//   max-width: 19em;
+//   margin: 0 auto;
+// }
 
 tr.visible {
 

@@ -22,7 +22,7 @@ export default View.extend({
     this.projection = d3.geo.projection(flippedStereographic)
       .clipAngle(179)
       .rotate([0, -90])
-      .precision(.1);
+      .precision(0.1);
 
     var projection = this.projection;
 
@@ -31,28 +31,28 @@ export default View.extend({
 
     var svg = d3.select(this.el);
 
-    svg.append("path")
+    svg.append('path')
         .datum(d3.geo.circle().origin([0, 90]).angle(90))
-        .attr("class", "horizon");
+        .attr('class', 'horizon');
 
-    svg.append("path")
+    svg.append('path')
         .datum(d3.geo.graticule())
-        .attr("class", "graticule");
+        .attr('class', 'graticule');
 
     // Azimuth Ticks
-    var ticksAzimuth = svg.append("g")
-        .attr("class", "ticks ticks--azimuth");
+    var ticksAzimuth = svg.append('g')
+        .attr('class', 'ticks ticks--azimuth');
 
-    ticksAzimuth.selectAll("line")
+    ticksAzimuth.selectAll('line')
         .data(d3.range(360))
-      .enter().append("line");
+      .enter().append('line');
 
-    ticksAzimuth.selectAll("text")
+    ticksAzimuth.selectAll('text')
         .data(d3.range(0, 360, 10))
-      .enter().append("text")
-        .attr("dy", ".35em")
+      .enter().append('text')
+        .attr('dy', '0.35em')
         .text(function(d) {
-          return d === 0 ? "N" : d === 90 ? "E" : d === 180 ? "S" : d === 270 ? "W" : d + "°";
+          return d === 0 ? 'N' : d === 90 ? 'E' : d === 180 ? 'S' : d === 270 ? 'W' : d + '°';
         });
 
     // Elevation Ticks
@@ -98,20 +98,21 @@ export default View.extend({
 
     var svg = d3.select(this.el);
 
+    // re-render only when size changes
     if ( e && width == svg.attr('width') && height == svg.attr('height') ) {
       return;
     }
 
-    log(width, height);
+    log('Width:', width, 'Height:', height);
 
     svg.attr('width', width)
        .attr('height', height);
 
-    var scale = Math.min(width,height) * .44;
+    var scale = Math.min(width,height) * 0.44;
 
     var projection = this.projection
       .scale(scale)
-      .translate([width / 2 + .5, height / 2 + .5]);
+      .translate([width / 2 + 0.5, height / 2 + 0.5]);
 
     svg.select('path.graticule').attr('d', this.path);
     svg.select('path.horizon').attr('d', this.path);
@@ -151,7 +152,7 @@ export default View.extend({
               .attr('x', p[0])
               .attr('y', p[1]);
         })
-        .attr('dy', '.35em')
+        .attr('dy', '0.35em')
         .text(function(d) { return d + '°'; });
 
     this.updateSatellites();
@@ -210,6 +211,10 @@ export default View.extend({
             .attr("dx", "0.5em")
             .text( d.prn );
 
+          // Redraw the paths every minute
+          //   This is necessary to show the future/past path
+          //   Could be optimized by only recalculating the needed positions
+          //   and redrawing from cached
           setInterval( updateOrbitalPath.bind(sat, d, projection, path), 60e3 );
 
         })
@@ -230,11 +235,10 @@ export default View.extend({
         });
 
 
-    satellites
-      .each(function (d) {
-        updateSat.call(d3.select(this), d, projection, path);
-        updateOrbitalPath.call(d3.select(this), d, projection, path);
-      });
+    satellites.each(function (d) {
+      updateSat.call(d3.select(this), d, projection, path);
+      updateOrbitalPath.call(d3.select(this), d, projection, path);
+    });
 
   },
 
@@ -256,7 +260,7 @@ function updateSat (satellite, projection, path) {
 
   this.classed('invisible', function (d) {
     return satellite.elevation < 0;
-  })
+  });
 
   this.select('g.position')
     .attr('transform', function () {

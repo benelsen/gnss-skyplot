@@ -225,7 +225,7 @@ export default Collection.extend({
 function pad(x, n, p) {
 
   if ( !p ) {
-    p = '0'
+    p = '0';
   }
 
   x = x.toString();

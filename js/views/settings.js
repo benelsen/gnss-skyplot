@@ -15,7 +15,7 @@ export default View.extend({
   bindings: {
 
     'model.time': {
-      type: function (el, value, prevValue) {
+      type: function (el, value) {
         if ( el.contains( document.activeElement ) ) return;
         el.value = moment.utc( value ).format('YYYY-MM-DD HH:mm:ss ZZ');
       },
@@ -25,7 +25,6 @@ export default View.extend({
     'model.longitude': {
       type: function (el, value) {
         if ( el.contains( document.activeElement ) ) return;
-        // el.value = sexagesimal.format(value, 'lon'); //.toFixed(5);
         el.value = value.toFixed(5);
       },
       hook: 'longitude'
@@ -34,7 +33,6 @@ export default View.extend({
     'model.latitude': {
       type: function (el, value) {
         if ( el.contains( document.activeElement ) ) return;
-        // el.value = sexagesimal.format(value, 'lat'); //.toFixed(5);
         el.value = value.toFixed(5);
       },
       hook: 'latitude'
@@ -52,7 +50,9 @@ export default View.extend({
 
   events: {
 
-    'change input': 'change',
+    'change [data-hook=coordinates] input': 'changeLocation',
+    'change [data-hook=time] input': 'changeTime',
+
     'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
     'click [data-hook=locate]': 'getUserLocation',
     'click [data-hook=share] button': 'share'
@@ -71,9 +71,9 @@ export default View.extend({
     removeClass(el, 'inactive');
 
     document.location.hash = 'location=' + [
-      app.user.position[0].toFixed(5),
-      app.user.position[1].toFixed(5),
-      app.user.position[2].toFixed(1)
+      this.model.position[0].toFixed(5),
+      this.model.position[1].toFixed(5),
+      this.model.position[2].toFixed(1)
     ].join(',');
 
     var input = el.querySelector('input');
@@ -84,53 +84,48 @@ export default View.extend({
   },
 
   getUserLocation: function () {
-    app.user.getLocationFromAPI();
+
+    log('getUserLocation');
+
+    this.model.getLocationFromAPI();
+
   },
 
-  change: function (e) {
+  changeLocation: function (e) {
 
-    log('change');
+    log('changeLocation');
+
+    var position = Array.from( this.model.position );
 
     var index = ['longitude', 'latitude', 'height'].indexOf(e.target.dataset.hook);
 
-    if ( index > -1 ) {
+    position[index] = +e.target.value;
 
-      var position = Array.from( this.model.position );
+    this.model.set('position', position);
 
-      // if ( index < 2 ) {
-        // console.log( e.target.value, sexagesimal( e.target.value ) );
-        // position[index] = sexagesimal( e.target.value );
-      // } else {
-      position[index] = +e.target.value;
-      // }
-      //
+  },
 
-      this.model.set('position', position);
+  changeTime: function (e) {
 
-    } else if ( e.target.dataset.hook === 'time' ) {
+    log('changeTime');
 
-      this.model.timeOffset = ( moment.utc(e.target.value, ['YYYY-MM-DD HH:mm:ss ZZ', moment.ISO_8601]).valueOf() - Date.now() ) / 1000;
-
-    } else if ( e.target.dataset.hook === 'animation' ) {
-
-      this.model.animation = e.target.checked;
-
-    } else if ( e.target.dataset.hook === 'update-rate' ) {
-
-      this.model.pulseRate = e.target.value * 1e3;
-
-    }
+    this.model.timeOffset = ( moment.utc(e.target.value, ['YYYY-MM-DD HH:mm:ss ZZ', moment.ISO_8601]).valueOf() - Date.now() ) / 1000;
 
   },
 
   zeroTimeOffset: function () {
+
+    log('zeroTimeOffset');
+
     this.model.timeOffset = 0;
+
   },
 
   render: function () {
 
     log('render');
     // this.renderWithTemplate();
+
   }
 
 });

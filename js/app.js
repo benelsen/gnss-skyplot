@@ -1,27 +1,12 @@
-/* global app */
-
 /* Polyfills */
 import '6to5/polyfill';
 import 'isomorphic-fetch';
 
 /* Logging */
-try {
-
-  if ( ['localhost', 'dev', '.local'].indexOf(document.domain) !== -1 ) {
-    localStorage.setItem('debug', true);
-  } else {
-    localStorage.removeItem('debug');
-  }
-
-} catch(e) {
-  console.info(e);
-}
-
 import * as bows from 'bows';
 var log = bows('App');
 
 import * as domReady from 'domready';
-import * as AmpersandState from 'ampersand-state';
 
 import Satellites from './models/satellites';
 import User from './models/user';
@@ -70,7 +55,7 @@ var app = {
 
   }
 
-}
+};
 
 app.inititalize();
 

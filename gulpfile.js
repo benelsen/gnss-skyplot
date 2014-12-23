@@ -27,19 +27,16 @@ gulp.task('livereload', function() {
   livereload.listen();
 });
 
-var bundleCount = 0;
 var bundler;
 
-function bundle() {
+function bundle(watch) {
 
-  if ( !bundler || bundleCount++ > 6 ) {
+  if ( !bundler ) {
 
-    console.log('Recreating bundler');
-
-    bundleCount = 0;
-    bundler = watchify( browserify('./js/app.js', watchify.args) );
-    bundler.transform(to5ify);
-    bundler.on('update', bundle);
+    bundler = watchify( browserify('./js/app.js', watchify.args) )
+      .transform(to5ify)
+      .on('update', bundle)
+      .on('log', gutil.log.bind(gutil, 'Watchify:'));
 
   }
 

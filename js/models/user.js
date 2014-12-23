@@ -24,11 +24,6 @@ export default AmpersandState.extend({
     position: {
       type: 'array',
       default: () => [0, 0, 0]
-    },
-
-    animation: {
-      type: 'boolean',
-      default: false
     }
 
   },
