@@ -38,6 +38,8 @@ export default View.extend({
 
   render: function () {
 
+    log('render');
+
     // this.renderWithTemplate();
 
   },

@@ -3,7 +3,6 @@
 import * as bows from 'bows';
 var log = bows('Settings');
 
-import * as _ from 'underscore';
 import * as View from 'ampersand-view';
 import * as moment from 'moment';
 // import * as sexagesimal from 'sexagesimal';

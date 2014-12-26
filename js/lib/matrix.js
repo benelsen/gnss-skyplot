@@ -104,7 +104,6 @@ export function mult (A, B) {
 export function transpose (A) {
 
   var C = matrix(A[0].length, A.length);
-  var tmp;
 
   for (let i = 0; i < A[0].length; i++) {
 

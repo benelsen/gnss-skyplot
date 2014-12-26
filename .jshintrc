@@ -1,3 +1,13 @@
 {
-  "esnext": true
+  "browserify": true,
+  "browser": true,
+  "esnext": true,
+  "indent": 2,
+  "quotmark": "single",
+  "undef": true,
+  "unused": true,
+  "globals": {
+    "app": true,
+    "fetch": true
+  }
 }

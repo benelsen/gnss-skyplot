@@ -4,8 +4,6 @@ import * as bows from 'bows';
 var log = bows('Home');
 
 import * as View from 'ampersand-view';
-import * as FormView from 'ampersand-form-view';
-import * as InputView from 'ampersand-input-view';
 
 import SkyplotView from '../views/skyplot';
 import SatelliteListView from '../views/satelliteList';
@@ -42,6 +40,8 @@ export default View.extend({
 
   render: function () {
 
+    log('render');
+
     this.registerSubview(this.skyplotView);
     this.skyplotView.render();
 
@@ -57,10 +57,3 @@ export default View.extend({
   }
 
 });
-
-/*
-          <div class="form-group">
-            <button type="button" class="btn btn-primary calculate">Calculate Positions</button>
-            <button type="button" class="btn btn-info locate">Locate Me</button>
-          </div>
-*/

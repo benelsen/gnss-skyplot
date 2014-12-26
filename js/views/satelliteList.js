@@ -3,7 +3,6 @@
 import * as bows from 'bows';
 var log = bows('SatelliteList');
 
-import * as _ from 'underscore';
 import * as View from 'ampersand-view';
 
 import SatelliteView from './satelliteListItem';

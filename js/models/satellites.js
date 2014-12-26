@@ -2,6 +2,7 @@
 /* Logging */
 import * as bows from 'bows';
 var log = bows('Satellites');
+
 import * as Collection from 'ampersand-collection';
 import * as localforage from 'localforage';
 

@@ -1,7 +1,7 @@
 
 /* Logging */
-import * as bows from 'bows';
-var log = bows('Satellite');
+// import * as bows from 'bows';
+// var log = bows('Satellite');
 
 import * as AmpersandState from 'ampersand-state';
 import * as orb from 'orbjs';

@@ -1,3 +1,5 @@
+'use strict';
+
 /* Polyfills */
 import '6to5/polyfill';
 import 'isomorphic-fetch';

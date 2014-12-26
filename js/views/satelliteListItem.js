@@ -1,7 +1,7 @@
 
 /* Logging */
-import * as bows from 'bows';
-var log = bows('SatelliteListItem');
+// import * as bows from 'bows';
+// var log = bows('SatelliteListItem');
 
 import * as View from 'ampersand-view';
 

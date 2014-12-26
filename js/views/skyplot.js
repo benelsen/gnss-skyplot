@@ -10,8 +10,6 @@ import * as orb from 'orbjs';
 
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
-var i = 0;
-
 export default View.extend({
 
   events: {
@@ -23,8 +21,6 @@ export default View.extend({
       .clipAngle(179)
       .rotate([0, -90])
       .precision(0.1);
-
-    var projection = this.projection;
 
     this.path = d3.geo.path()
       .projection(this.projection);
@@ -74,7 +70,7 @@ export default View.extend({
 
     this.collection.on('reset', this.updateSatellites.bind(this) );
 
-    this.collection.on('change', (satellite, e) => {
+    this.collection.on('change', (satellite) => {
 
       var el = d3.select('g.satellites g.satellite[data-prn=prn'+satellite.prn+']');
       updateSat.call(el, satellite, this.projection, this.path);
@@ -83,7 +79,7 @@ export default View.extend({
 
     app.user.on('change:position change:timeOffset', this.updateSatellites.bind(this));
 
-    svg.on('click', function (e) {
+    svg.on('click', function () {
       svg.select('g.satellites .highlight').classed('highlight', false)
          .select('g.position circle').attr('r', 3);
     });
@@ -179,9 +175,7 @@ export default View.extend({
 
     // Create new satellites
     satellites.enter().append('g')
-        .attr('class', function (d) {
-          return 'satellite';
-        })
+        .attr('class', 'satellite')
         .attr('data-prn', function (d) {
           return 'prn' + d.prn;
         })
@@ -207,8 +201,8 @@ export default View.extend({
 
           position
             .append('text')
-            .attr("dy", "1.2em")
-            .attr("dx", "0.5em")
+            .attr('dy', '1.2em')
+            .attr('dx', '0.5em')
             .text( d.prn );
 
           // Redraw the paths every minute
@@ -254,13 +248,11 @@ function flippedStereographic(λ, φ)  {
   ];
 }
 
-function updateSat (satellite, projection, path) {
+function updateSat (satellite, projection) {
 
   // log('update', satellite.prn);
 
-  this.classed('invisible', function (d) {
-    return satellite.elevation < 0;
-  });
+  this.classed('invisible', satellite.elevation < 0);
 
   this.select('g.position')
     .attr('transform', function () {
@@ -270,9 +262,7 @@ function updateSat (satellite, projection, path) {
 
     })
     .select('circle')
-      .attr('fill', function () {
-        return satellite.health === 0 ? '#009900' : '#ff3300';
-      });
+      .attr('fill', satellite.health === 0 ? '#009900' : '#ff3300');
 
 }
 
@@ -302,14 +292,14 @@ function updateOrbitalPath (satellite, projection, path) {
 
   this.select('path.future')
     .datum({
-      type: "LineString",
+      type: 'LineString',
       coordinates: positions.filter((t) => { return t.time >= now; }).map((t) => t.position)
     })
     .attr('d', path);
 
   this.select('path.past')
     .datum({
-      type: "LineString",
+      type: 'LineString',
       coordinates: positions.filter((t) => { return t.time <= now; }).map((t) => t.position)
     })
     .attr('d', path);
