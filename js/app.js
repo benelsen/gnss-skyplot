@@ -1,6 +1,7 @@
 'use strict';
 
 /* Polyfills */
+import 'es5-shim/es5-shim';
 import '6to5/polyfill';
 import 'isomorphic-fetch';
 
