@@ -1,0 +1,24 @@
+{
+  "name": "GPS Skyplot",
+  "description": "Skyplot of all GPS Satellites visible from your location",
+  "launch_path": "/gps-skyplot/index.html",
+  "icons": {
+    "512": "/gps-skyplot/images/icon-512.png",
+    "128": "/gps-skyplot/images/icon-128.png",
+    "60": "/gps-skyplot/images/icon-60.png",
+    "48": "/gps-skyplot/images/icon-48.png"
+  },
+  "developer": {
+    "name": "Ben Elsen",
+    "url": "https://benelsen.com/"
+  },
+  "permissions": {
+    "geolocation": {
+      "description": "Required to automatically set your location"
+    }
+  },
+  "default_locale": "en",
+  "type": "web",
+  "appcache_path": "/gps-skyplot/index.appcache",
+  "version": "1.0.0"
+}
