@@ -50,7 +50,7 @@ export default View.extend({
   events: {
 
     'change [data-hook=coordinates] input': 'changeLocation',
-    'change [data-hook=time] input': 'changeTime',
+    'change input[data-hook=time]': 'changeTime',
 
     'click [data-hook=zeroTimeOffset]': 'zeroTimeOffset',
     'click [data-hook=locate]': 'getUserLocation',
