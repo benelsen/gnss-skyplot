@@ -7,6 +7,7 @@ var to5ify = require("6to5ify");
 
 var buffer = require('vinyl-buffer');
 var concat = require('gulp-concat');
+var imagemin = require('gulp-imagemin');
 var livereload = require('gulp-livereload');
 var minifyCSS = require('gulp-minify-css');
 var prefix = require('gulp-autoprefixer');
@@ -16,9 +17,10 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-gulp.task('watch', ['css', 'livereload', 'watchify'], function () {
+gulp.task('watch', ['img', 'css', 'livereload', 'watchify'], function () {
 
   gulp.watch('scss/*.scss', ['sass']);
+  gulp.watch('images/**/*.{png,jpg,gif}', ['img']);
   gulp.watch(['index.html', 'build/**/*.{js,css}']).on('change', livereload.changed);
 
 });
@@ -71,6 +73,18 @@ gulp.task('uglify-js', ['js'], function () {
       suffix: '.min'
     }))
     .pipe(gulp.dest('build/js'));
+
+});
+
+gulp.task('img-opti', function () {
+
+  return gulp.src([
+      'images/*.png',
+    ])
+    .pipe(imagemin({
+      progressive: true
+    }))
+    .pipe(gulp.dest('build/images'));
 
 });
 
@@ -128,7 +142,8 @@ gulp.task('sass', function () {
 
 gulp.task('deploy', ['uglify-js', 'minify-css']);
 
+gulp.task('img', ['img-opti']);
 gulp.task('js', ['browserify']);
 gulp.task('css', ['vendor-css', 'sass']);
-gulp.task('build', ['css', 'js']);
+gulp.task('build', ['img', 'css', 'js']);
 gulp.task('default', ['build']);

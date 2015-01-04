@@ -3,10 +3,10 @@
   "description": "Skyplot of all GPS Satellites visible from your location",
   "launch_path": "/gps-skyplot/index.html",
   "icons": {
-    "512": "/gps-skyplot/images/icon-512.png",
-    "128": "/gps-skyplot/images/icon-128.png",
-    "60": "/gps-skyplot/images/icon-60.png",
-    "48": "/gps-skyplot/images/icon-48.png"
+    "512": "/gps-skyplot/build/images/icon-512.png",
+    "128": "/gps-skyplot/build/images/icon-128.png",
+    "60": "/gps-skyplot/build/images/icon-60.png",
+    "48": "/gps-skyplot/build/images/icon-48.png"
   },
   "developer": {
     "name": "Ben Elsen",
