@@ -6,10 +6,10 @@ import '6to5/polyfill';
 import 'isomorphic-fetch';
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('App');
 
-import * as domReady from 'domready';
+import domReady from 'domready';
 
 import Satellites from './models/satellites';
 import User from './models/user';

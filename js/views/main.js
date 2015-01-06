@@ -1,9 +1,9 @@
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('Home');
 
-import * as View from 'ampersand-view';
+import View from 'ampersand-view';
 
 import SkyplotView from '../views/skyplot';
 import SatelliteListView from '../views/satelliteList';

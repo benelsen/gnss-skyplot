@@ -1,6 +1,6 @@
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('User');
 
 import * as AmpersandState from 'ampersand-state';

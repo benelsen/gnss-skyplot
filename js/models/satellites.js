@@ -1,12 +1,12 @@
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('Satellites');
 
-import * as Collection from 'ampersand-collection';
-import * as localforage from 'localforage';
+import Collection from 'ampersand-collection';
+import localforage from 'localforage';
 
-import * as matrix from './../lib/matrix';
+import matrix from './../lib/matrix';
 
 import Satellite from './satellite';
 

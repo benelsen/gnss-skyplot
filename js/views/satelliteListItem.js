@@ -1,11 +1,11 @@
 
 /* Logging */
-// import * as bows from 'bows';
+// import bows from 'bows';
 // var log = bows('SatelliteListItem');
 
-import * as View from 'ampersand-view';
+import View from 'ampersand-view';
 
-import * as toggleClass from 'amp-toggle-class';
+import toggleClass from 'amp-toggle-class';
 
 export default View.extend({
 

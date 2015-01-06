@@ -1,13 +1,13 @@
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('Settings');
 
-import * as View from 'ampersand-view';
-import * as moment from 'moment';
-// import * as sexagesimal from 'sexagesimal';
+import View from 'ampersand-view';
+import moment from 'moment';
+// import sexagesimal from 'sexagesimal';
 
-import * as removeClass from 'amp-remove-class';
+import removeClass from 'amp-remove-class';
 
 export default View.extend({
 

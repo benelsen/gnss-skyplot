@@ -1,12 +1,12 @@
 
 /* Logging */
-import * as bows from 'bows';
+import bows from 'bows';
 var log = bows('Skyplot');
 
-import * as View from 'ampersand-view';
+import View from 'ampersand-view';
 
-import * as d3 from 'd3';
-import * as orb from 'orbjs';
+import d3 from 'd3';
+import orb from 'orbjs';
 
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 

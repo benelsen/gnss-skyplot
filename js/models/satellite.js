@@ -1,10 +1,10 @@
 
 /* Logging */
-// import * as bows from 'bows';
+// import bows from 'bows';
 // var log = bows('Satellite');
 
-import * as AmpersandState from 'ampersand-state';
-import * as orb from 'orbjs';
+import AmpersandState from 'ampersand-state';
+import orb from 'orbjs';
 
 export default AmpersandState.extend({
 
