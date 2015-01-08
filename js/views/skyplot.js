@@ -126,18 +126,12 @@ export default View.extend({
         });
 
     ticksAzimuth.selectAll('text')
-        .each(function(d) {
-          var p = projection([d, -5]);
-
-          d3.select(this)
-            .attr('x', p[0])
-            .attr('y', p[1]);
-        })
         .attr('transform', function (d) {
+          var p = projection([d, -5]);
 
           var r = d % 90 === 0 ? 0 : ( (d+90) % 180 ) - 90;
 
-          return 'rotate(' + r + ', ' + d3.select(this).attr('x') + ', ' + d3.select(this).attr('y') + ')';
+          return 'translate(' + p[0] + ', ' + p[1] + ')rotate(' + r + ')';
         });
 
     svg.selectAll('g.ticks.ticks--elevation text')

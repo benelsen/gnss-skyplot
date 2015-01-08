@@ -3,9 +3,9 @@
 import bows from 'bows';
 var log = bows('User');
 
-import * as AmpersandState from 'ampersand-state';
-import * as localforage from 'localforage';
-import * as orb from 'orbjs';
+import AmpersandState from 'ampersand-state';
+import localforage from 'localforage';
+import orb from 'orbjs';
 
 window.localforage = localforage;
 
