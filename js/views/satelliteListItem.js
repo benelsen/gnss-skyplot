@@ -1,7 +1,7 @@
 
 /* Logging */
-// import bows from 'bows';
-// var log = bows('SatelliteListItem');
+import bows from 'bows';
+var log = bows('SatelliteListItem');
 
 import View from 'ampersand-view';
 
@@ -38,6 +38,10 @@ export default View.extend({
       no: 'invisible'
     },
 
+    'model.selected':  {
+      type: 'booleanClass'
+    },
+
     'model.elevation': {
       type: function (el, value, prevValue) {
         el.querySelector('span').textContent = value.toFixed(1);
@@ -64,6 +68,19 @@ export default View.extend({
       hook: 'range'
     },
 
+  },
+
+  events: {
+    click: 'select'
+  },
+
+  render: function () {
+    // log.info('render');
+    this.renderWithTemplate();
+  },
+
+  select: function () {
+    this.model.selected = !this.model.selected;
   }
 
 });

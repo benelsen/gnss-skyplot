@@ -145,27 +145,38 @@ td.elevation::after {
 
 }
 
-table.satellite-list {
-  margin: 0 auto;
-}
-
-table.dop {
-  margin: 0 auto;
-}
-
 // form.settings {
 //   max-width: 19em;
 //   margin: 0 auto;
 // }
 
-tr.visible {
-
+table.dop {
+  margin: 0 auto;
 }
 
-tr.invisible {
-  background: #eee;
-  color: #666;
-  visibility: visible;
+table.satellite-list {
+  margin: 0 auto;
+
+  tbody {
+
+    tr {
+    }
+
+    tr.selected, tr.invisible.selected {
+      background-color: #F9FFAA;
+    }
+
+    tr.visible {
+    }
+
+    tr.invisible {
+      background: #eee;
+      color: #333;
+      visibility: visible;
+    }
+
+  }
+
 }
 
 table.dop td, table.dop th {

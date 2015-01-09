@@ -12,9 +12,6 @@ const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
 export default View.extend({
 
-  events: {
-  },
-
   initialize: function () {
 
     this.projection = d3.geo.projection(flippedStereographic)
@@ -79,9 +76,16 @@ export default View.extend({
 
     app.user.on('change:position change:timeOffset', this.updateSatellites.bind(this));
 
-    svg.on('click', function () {
-      svg.select('g.satellites .highlight').classed('highlight', false)
-         .select('g.position circle').attr('r', 3);
+    this.collection.on('change:selected', (satellite, value) => {
+
+      svg.select('g.satellites g.satellite[data-prn=prn'+satellite.prn+']')
+          .classed('highlight', value)
+        .select('g.position circle').attr('r', value ? 4 : 3);
+
+    });
+
+    svg.on('click', () => {
+      this.collection.deselect();
     });
 
   },
@@ -206,20 +210,14 @@ export default View.extend({
           setInterval( updateOrbitalPath.bind(sat, d, projection, path), 60e3 );
 
         })
-        .on('mouseenter', function () {
-          d3.select(this).classed('highlight', true)
-            .select('g.position circle').attr('r', 4);
+        .on('mouseenter', function (d) {
+          d.selected = true;
         })
-        .on('mouseleave', function () {
-          d3.select(this).classed('highlight', false)
-            .select('g.position circle').attr('r', 3);
+        .on('mouseleave', function (d) {
+          d.selected = false;
         })
-        .on('click', function () {
-          d3.selectAll('g.satellites .highlight').classed('highlight', false)
-            .select('g.position circle').attr('r', 3);
-
-          d3.select(this).classed('highlight', true)
-            .select('g.position circle').attr('r', 4);
+        .on('click', function (d) {
+          d.selected = true;
         });
 
 

@@ -52,7 +52,8 @@ export default AmpersandState.extend({
     },
 
     selected: {
-      type: 'boolean'
+      type: 'boolean',
+      default: false
     }
 
   },

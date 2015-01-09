@@ -22,13 +22,13 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "6to5": "^2.8.2",
+    "6to5": "^2.9.3",
     "amp-remove-class": "^1.0.1",
     "amp-toggle-class": "^1.0.1",
     "ampersand-collection": "^1.3.17",
     "ampersand-dom": "^1.2.7",
     "ampersand-form-view": "^2.2.0",
-    "ampersand-input-view": "^3.1.0",
+    "ampersand-input-view": "^3.1.1",
     "ampersand-router": "^1.0.6",
     "ampersand-state": "^4.4.4",
     "ampersand-view": "^7.2.0",
@@ -43,8 +43,8 @@
     "orbjs": "^0.1.4"
   },
   "devDependencies": {
-    "6to5ify": "^3.1.0",
-    "browserify": "^8.0.3",
+    "6to5ify": "^3.1.2",
+    "browserify": "^8.1.0",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.0.0",
     "gulp-concat": "^2.4.3",

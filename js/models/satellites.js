@@ -20,7 +20,29 @@ export default Collection.extend({
     direction: 1
   },
 
+  deselect: function () {
+
+    this.forEach(function (satellite) {
+      satellite.selected = false;
+    });
+
+  },
+
   initialize: function () {
+
+    this.on('change:selected', (model, value) => {
+
+      if ( !value ) {
+        return;
+      }
+
+      this.forEach(function (satellite) {
+        if ( satellite.selected && model.cid !== satellite.cid ) {
+          satellite.selected = false;
+        }
+      });
+
+    });
 
     this.setSortMode('elevation');
 

@@ -44,13 +44,17 @@ var app = {
       domReady( () => {
 
         if ( ! this.user.setLocationFromHash() ) {
-          this.user.getLocationFromAPI();
+          this.user.getLocationFromAPI()
+            .then(() => {
+              this.satellites.at(0).selected = true;
+            });
         }
 
         this.satellites.reset(result[1].satellites);
         log.info('Added ephemerides');
 
         this.satellites.save();
+        this.satellites.at(0).selected = true;
 
       });
 
