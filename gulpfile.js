@@ -118,9 +118,19 @@ gulp.task('vendor-css', function () {
 
 });
 
-gulp.task('sass', shell.task([
+gulp.task('compile-sass', shell.task([
   'sass ./scss/index.scss ./build/css/index.css'
 ]));
+
+gulp.task('sass', ['compile-sass'], function () {
+
+  return gulp.src('./build/css/index.css')
+    .pipe(prefix({
+      browsers: ['last 2 versions']
+    }))
+    .pipe(gulp.dest('build/css'));
+
+});
 
 // gulp.task('sass', function () {
 
