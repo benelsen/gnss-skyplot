@@ -18,6 +18,10 @@ import User from './models/user';
 
 import MainView from './views/main';
 
+if ( localStorage && localStorage.debug ) {
+  window._app = app;
+}
+
 app.extend({
 
   user: new User(),
@@ -84,7 +88,3 @@ app.extend({
 });
 
 app.initialize();
-
-if ( localStorage.debug ) {
-  window.app = app;
-}

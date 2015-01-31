@@ -58,12 +58,12 @@ export default Collection.extend({
       this.trigger('change:time');
     });
 
-    app.on('change:position', (e) => {
+    app.on('user:change:position', (e) => {
       log.info('User position change event', e);
       this.update();
     });
 
-    app.on('change:timeOffset', (e) => {
+    app.on('user:change:timeOffset', (e) => {
       log.info('User timeOffset change event', e);
 
       this.fetch()
