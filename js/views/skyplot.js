@@ -5,10 +5,10 @@ var log = bows('Skyplot');
 
 import View from 'ampersand-view';
 
+import app from 'ampersand-app';
+
 import d3 from 'd3';
 import orb from 'orbjs';
-
-import app from 'ampersand-app';
 
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
@@ -67,6 +67,9 @@ export default View.extend({
 
     window.addEventListener('resize', this.render.bind(this), false );
 
+    app.on('user:change:position', this.updateSatellites.bind(this));
+    app.on('user:change:timeOffset', this.updateSatellites.bind(this));
+
     this.collection.on('reset', this.updateSatellites.bind(this) );
 
     this.collection.on('change', (satellite) => {
@@ -75,8 +78,6 @@ export default View.extend({
       updateSat.call(el, satellite, this.projection, this.path);
 
     });
-
-    app.on('change:position change:timeOffset', this.updateSatellites.bind(this));
 
     this.collection.on('change:selected', (satellite, value) => {
 
@@ -94,7 +95,7 @@ export default View.extend({
 
   render (e) {
 
-    log('render', e);
+    log.info('render', e);
 
     var {width, height} = this.el.getClientRects()[0];
 
@@ -105,7 +106,7 @@ export default View.extend({
       return;
     }
 
-    log('Width:', width, 'Height:', height);
+    log.info('Width:', width, 'Height:', height);
 
     svg.attr('width', width)
        .attr('height', height);
@@ -157,7 +158,7 @@ export default View.extend({
 
   updateSatellites () {
 
-    log('update all');
+    log.info('update all');
 
     var projection = this.projection;
     var path = this.path;
@@ -244,7 +245,7 @@ function flippedStereographic(λ, φ)  {
 
 function updateSat (satellite, projection) {
 
-  // log('update', satellite.prn);
+  // log.info('update', satellite.prn);
 
   this.classed('invisible', satellite.elevation < 0);
 
@@ -262,7 +263,7 @@ function updateSat (satellite, projection) {
 
 function updateOrbitalPath (satellite, projection, path) {
 
-  // log('update path', satellite.prn);
+  // log.info('update path', satellite.prn);
 
   var prev = new Date( app.user.time - 1 * satellite.period * 1e3 );
   var now  = new Date( app.user.time );

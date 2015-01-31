@@ -7,6 +7,8 @@ import AmpersandState from 'ampersand-state';
 import localforage from 'localforage';
 import orb from 'orbjs';
 
+import app from 'ampersand-app';
+
 localforage.config({
   name: 'skyplot'
 });
@@ -92,12 +94,12 @@ export default AmpersandState.extend({
     log.info('Initializing user');
 
     this.on('change:position', () => {
-      app.trigger('change:position');
+      app.trigger('user:change:position');
       this.save.bind(this);
     });
 
     this.on('change:timeOffset', () => {
-      app.trigger('change:timeOffset');
+      app.trigger('user:change:timeOffset');
     });
 
   },
