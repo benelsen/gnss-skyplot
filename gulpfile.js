@@ -119,7 +119,7 @@ gulp.task('vendor-css', function () {
 });
 
 gulp.task('sass', shell.task([
-  'sass ./scss/index.scss ./build/css/bla.css'
+  'sass ./scss/index.scss ./build/css/index.css'
 ]));
 
 // gulp.task('sass', function () {
