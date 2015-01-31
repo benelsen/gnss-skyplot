@@ -74,12 +74,12 @@ export default View.extend({
     click: 'select'
   },
 
-  render: function () {
+  render () {
     // log.info('render');
     this.renderWithTemplate();
   },
 
-  select: function () {
+  select () {
     this.model.selected = !this.model.selected;
   }
 

@@ -36,7 +36,7 @@ export default View.extend({
 
   },
 
-  render: function () {
+  render () {
 
     log('render');
 

@@ -11,19 +11,19 @@ var log = bows('App');
 
 import domReady from 'domready';
 
+import app from 'ampersand-app';
+
 import Satellites from './models/satellites';
 import User from './models/user';
 
 import MainView from './views/main';
 
-var app = {
+app.extend({
 
-  inititalize: function () {
+  user: new User(),
+  satellites: new Satellites(),
 
-    window.app = this;
-
-    this.user = new User();
-    this.satellites = new Satellites();
+  initialize () {
 
     domReady( () => {
 
@@ -53,6 +53,8 @@ var app = {
         this.satellites.reset(result[1].satellites);
         log.info('Added ephemerides');
 
+        this.startPulse();
+
         this.satellites.save();
         this.satellites.at(0).selected = true;
 
@@ -60,10 +62,29 @@ var app = {
 
     });
 
-  }
+  },
 
-};
+  startPulse () {
 
-app.inititalize();
+    if ( this.pulsar ) {
+      this.stopPulse();
+    }
 
-export default app;
+    this.pulsar = setInterval( () => {
+      this.trigger('pulse');
+      this.user.trigger('change:time');
+    }, this.user.pulseRate);
+
+  },
+
+  stopPulse () {
+    clearInterval( this.pulsar );
+  },
+
+});
+
+app.initialize();
+
+if ( localStorage.debug ) {
+  window.app = app;
+}

@@ -6,6 +6,8 @@
 import AmpersandState from 'ampersand-state';
 import orb from 'orbjs';
 
+import app from 'ampersand-app';
+
 export default AmpersandState.extend({
 
   props: {
@@ -92,13 +94,13 @@ export default AmpersandState.extend({
 
   },
 
-  initialize: function () {
+  initialize () {
 
     this.topocentricPosition(null, true);
 
   },
 
-  topocentricPosition: function (t, set, quiet) {
+  topocentricPosition (t, set, quiet) {
 
     if ( !t ) {
       t = app.user.gpsTime;
