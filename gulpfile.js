@@ -12,7 +12,8 @@ var livereload = require('gulp-livereload');
 var minifyCSS = require('gulp-minify-css');
 var prefix = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
-var sass = require('gulp-sass');
+// var sass = require('gulp-sass');
+var shell = require('gulp-shell')
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
@@ -117,28 +118,32 @@ gulp.task('vendor-css', function () {
 
 });
 
-gulp.task('sass', function () {
+gulp.task('sass', shell.task([
+  'sass ./scss/index.scss ./build/css/bla.css'
+]));
 
-  return gulp.src('./scss/index.scss')
-    .pipe(sourcemaps.init())
-      .pipe(sass({
-        outputStyle: 'compact',
-      }))
-    .pipe(sourcemaps.write({
-      sourceRoot: '../../scss',
-      includeContent: false
-    }))
-    .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(prefix({
-        browsers: ['last 2 versions']
-      }))
-    .pipe(sourcemaps.write('./', {
-      sourceRoot: '../scss',
-      includeContent: false
-    }))
-    .pipe(gulp.dest('build/css'));
+// gulp.task('sass', function () {
 
-});
+//   return gulp.src('./scss/index.scss')
+//     .pipe(sourcemaps.init())
+//       .pipe(sass({
+//         outputStyle: 'compact',
+//       }))
+//     .pipe(sourcemaps.write({
+//       sourceRoot: '../../scss',
+//       includeContent: false
+//     }))
+//     .pipe(sourcemaps.init({loadMaps: true}))
+//       .pipe(prefix({
+//         browsers: ['last 2 versions']
+//       }))
+//     .pipe(sourcemaps.write('./', {
+//       sourceRoot: '../scss',
+//       includeContent: false
+//     }))
+//     .pipe(gulp.dest('build/css'));
+
+// });
 
 gulp.task('deploy', ['uglify-js', 'minify-css']);
 
