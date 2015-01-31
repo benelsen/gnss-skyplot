@@ -13,16 +13,16 @@ export default View.extend({
     'click th': 'sortBy',
   },
 
-  sortBy: function (e) {
+  sortBy (e) {
 
     this.collection.setSortMode( e.target.dataset.hook );
     this.collection.sort();
 
   },
 
-  render: function () {
+  render () {
 
-    log('render');
+    log.info('render');
 
     // this.renderWithTemplate();
     this.renderCollection(this.collection, SatelliteView, this.query('tbody'));

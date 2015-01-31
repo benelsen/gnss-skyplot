@@ -58,7 +58,7 @@ export default View.extend({
 
   },
 
-  share: function () {
+  share () {
 
     log('share');
 
@@ -82,7 +82,7 @@ export default View.extend({
 
   },
 
-  getUserLocation: function () {
+  getUserLocation () {
 
     log('getUserLocation');
 
@@ -90,7 +90,7 @@ export default View.extend({
 
   },
 
-  changeLocation: function (e) {
+  changeLocation (e) {
 
     log('changeLocation');
 
@@ -104,7 +104,7 @@ export default View.extend({
 
   },
 
-  changeTime: function (e) {
+  changeTime (e) {
 
     log('changeTime');
 
@@ -112,7 +112,7 @@ export default View.extend({
 
   },
 
-  zeroTimeOffset: function () {
+  zeroTimeOffset () {
 
     log('zeroTimeOffset');
 
@@ -120,7 +120,7 @@ export default View.extend({
 
   },
 
-  render: function () {
+  render () {
 
     log('render');
     // this.renderWithTemplate();

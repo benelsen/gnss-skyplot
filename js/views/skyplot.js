@@ -8,11 +8,13 @@ import View from 'ampersand-view';
 import d3 from 'd3';
 import orb from 'orbjs';
 
+import app from 'ampersand-app';
+
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
 export default View.extend({
 
-  initialize: function () {
+  initialize () {
 
     this.projection = d3.geo.projection(flippedStereographic)
       .clipAngle(179)
@@ -74,7 +76,7 @@ export default View.extend({
 
     });
 
-    app.user.on('change:position change:timeOffset', this.updateSatellites.bind(this));
+    app.on('change:position change:timeOffset', this.updateSatellites.bind(this));
 
     this.collection.on('change:selected', (satellite, value) => {
 
@@ -90,7 +92,7 @@ export default View.extend({
 
   },
 
-  render: function (e) {
+  render (e) {
 
     log('render', e);
 
@@ -153,7 +155,7 @@ export default View.extend({
 
   },
 
-  updateSatellites: function () {
+  updateSatellites () {
 
     log('update all');
 

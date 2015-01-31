@@ -5,6 +5,8 @@ var log = bows('Home');
 
 import View from 'ampersand-view';
 
+import app from 'ampersand-app';
+
 import SkyplotView from '../views/skyplot';
 import SatelliteListView from '../views/satelliteList';
 import SettingsView from '../views/settings';
@@ -14,7 +16,7 @@ export default View.extend({
 
   pageTitle: 'home',
 
-  initialize: function () {
+  initialize () {
 
     this.skyplotView = new SkyplotView({
       el: this.queryByHook('skyplot'),
@@ -38,9 +40,9 @@ export default View.extend({
 
   },
 
-  render: function () {
+  render () {
 
-    log('render');
+    log.info('render');
 
     this.registerSubview(this.skyplotView);
     this.skyplotView.render();

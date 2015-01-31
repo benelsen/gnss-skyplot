@@ -7,13 +7,9 @@ import AmpersandState from 'ampersand-state';
 import localforage from 'localforage';
 import orb from 'orbjs';
 
-window.localforage = localforage;
-
 localforage.config({
   name: 'skyplot'
 });
-
-// localforage.clear();
 
 const GPS_EPOCH_0 = new Date('1980-01-06T00:00:00.000Z').getTime();
 
@@ -91,31 +87,22 @@ export default AmpersandState.extend({
 
   },
 
-  initialize: function () {
+  initialize () {
 
     log.info('Initializing user');
 
-    this.pulsar = setInterval( () => {
-      this.trigger('pulse');
-      this.trigger('change:time');
-    }, this.pulseRate);
+    this.on('change:position', () => {
+      app.trigger('change:position');
+      this.save.bind(this);
+    });
 
-    this.on('change:position', this.save.bind(this));
-
-    this.on('change:pulseRate', () => {
-
-      clearInterval( this.pulsar );
-
-      this.pulsar = setInterval( () => {
-        this.trigger('pulse');
-        this.trigger('change:time');
-      }, this.pulseRate);
-
+    this.on('change:timeOffset', () => {
+      app.trigger('change:timeOffset');
     });
 
   },
 
-  save: function () {
+  save () {
 
     log.info('Trying to save the user to local storage');
 
@@ -126,7 +113,7 @@ export default AmpersandState.extend({
 
   },
 
-  load: function () {
+  load () {
 
     log.info('Trying to load the user from local storage');
 
@@ -147,10 +134,10 @@ export default AmpersandState.extend({
 
   },
 
-  setLocationFromHash: function () {
+  setLocationFromHash () {
 
     var locationMatch = /location=([\d.\-+]+)\,([\d.\-+]+)\,([\d.\-+]+)/.exec(document.location.hash);
-    log(locationMatch);
+    log.info('Location from hash:', locationMatch);
     if ( locationMatch ) {
       this.position = locationMatch.slice(1,4).map(Number);
       return true;
@@ -160,7 +147,7 @@ export default AmpersandState.extend({
 
   },
 
-  getLocationFromAPI: function () {
+  getLocationFromAPI () {
 
     log.info('Trying to get the user’s location from geolocation API');
 

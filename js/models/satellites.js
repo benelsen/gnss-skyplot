@@ -8,6 +8,8 @@ import localforage from 'localforage';
 
 import * as matrix from './../lib/matrix';
 
+import app from 'ampersand-app';
+
 import Satellite from './satellite';
 
 export default Collection.extend({
@@ -20,7 +22,7 @@ export default Collection.extend({
     direction: 1
   },
 
-  deselect: function () {
+  deselect () {
 
     this.forEach(function (satellite) {
       satellite.selected = false;
@@ -28,7 +30,7 @@ export default Collection.extend({
 
   },
 
-  initialize: function () {
+  initialize () {
 
     this.on('change:selected', (model, value) => {
 
@@ -51,30 +53,32 @@ export default Collection.extend({
       this.update();
     });
 
-    app.user.on('pulse', () => {
-      // log.info('Pulse');
+    app.on('pulse', () => {
       this.update( app.user.gpsTime + app.user.pulseRate / 1000 );
       this.trigger('change:time');
     });
 
-    app.user.on('change:position', (e) => {
+    app.on('change:position', (e) => {
       log.info('User position change event', e);
       this.update();
     });
 
-    app.user.on('change:timeOffset', (e) => {
+    app.on('change:timeOffset', (e) => {
       log.info('User timeOffset change event', e);
 
       this.fetch()
-      .then( (ephemerides) => {
-        this.reset(ephemerides.satellites);
-      });
+        .then( (ephemerides) => {
+          this.reset(ephemerides.satellites);
+        })
+        .catch(function (err) {
+          log.warn('Couldn’t load ephemerides from API', err.stack);
+        });
 
     });
 
   },
 
-  update: function (t, silent) {
+  update (t, silent) {
 
     // log.info('Calculating', app.user.gpsTime, t, silent);
 
@@ -87,7 +91,7 @@ export default Collection.extend({
 
   },
 
-  dop: function () {
+  dop () {
 
     if ( this.length === 0 ) return;
 
@@ -118,11 +122,11 @@ export default Collection.extend({
 
   },
 
-  comparator: function (a, b) {
+  comparator (a, b) {
     return (a[this.sortBy.field] > b[this.sortBy.field] ? 1 : -1) * this.sortBy.direction;
   },
 
-  setSortMode: function (field, direction) {
+  setSortMode (field, direction) {
 
     if ( !['elevation', 'azimuth', 'prn'].indexOf(field) ) {
       field = 'elevation';
@@ -141,7 +145,7 @@ export default Collection.extend({
 
   },
 
-  save: function () {
+  save () {
 
     log.info('Trying to save ephemerides to local storage');
 
@@ -157,7 +161,7 @@ export default Collection.extend({
 
   },
 
-  load: function () {
+  load () {
 
     log.info('Trying to load ephemerides from local storage');
 
@@ -206,7 +210,7 @@ export default Collection.extend({
 
   },
 
-  fetch: function () {
+  fetch () {
 
     var url = 'https://benelsen.com/gps-skyplot/api/almanac/';
 
