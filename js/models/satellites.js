@@ -6,7 +6,7 @@ var log = bows('Satellites');
 import Collection from 'ampersand-collection';
 import localforage from 'localforage';
 
-import matrix from './../lib/matrix';
+import * as matrix from './../lib/matrix';
 
 import Satellite from './satellite';
 
