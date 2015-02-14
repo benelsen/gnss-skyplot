@@ -95,7 +95,7 @@ export default AmpersandState.extend({
 
     this.on('change:position', () => {
       app.trigger('user:change:position');
-      this.save.bind(this);
+      this.save.call(this);
     });
 
     this.on('change:timeOffset', () => {
