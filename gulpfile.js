@@ -3,7 +3,7 @@ var gutil = require('gulp-util');
 
 var browserify = require('browserify');
 var watchify = require('watchify');
-var to5ify = require("6to5ify");
+var babelify = require("babelify");
 
 var buffer = require('vinyl-buffer');
 var concat = require('gulp-concat');
@@ -36,7 +36,7 @@ function bundle(watch) {
   if ( !bundler ) {
 
     bundler = watchify( browserify('./js/app.js', watchify.args) )
-      .transform(to5ify)
+      .transform(babelify)
       .on('update', bundle)
       .on('log', gutil.log.bind(gutil, 'Watchify:'));
 
@@ -57,7 +57,7 @@ gulp.task('watchify', bundle);
 gulp.task('browserify', function() {
 
   bundler = browserify('./js/app.js', { debug: true });
-  bundler.transform(to5ify);
+  bundler.transform(babelify);
 
   return bundle();
 
