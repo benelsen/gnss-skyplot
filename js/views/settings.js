@@ -15,7 +15,7 @@ export default View.extend({
 
     'model.time': {
       type: function (el, value) {
-        if ( el.contains( document.activeElement ) ) return;
+        if ( el.contains( document.activeElement ) ) { return; }
         el.value = moment.utc( value ).format('YYYY-MM-DD HH:mm:ss ZZ');
       },
       hook: 'time'
@@ -23,7 +23,7 @@ export default View.extend({
 
     'model.longitude': {
       type: function (el, value) {
-        if ( el.contains( document.activeElement ) ) return;
+        if ( el.contains( document.activeElement ) ) { return; }
         el.value = value.toFixed(5);
       },
       hook: 'longitude'
@@ -31,7 +31,7 @@ export default View.extend({
 
     'model.latitude': {
       type: function (el, value) {
-        if ( el.contains( document.activeElement ) ) return;
+        if ( el.contains( document.activeElement ) ) { return; }
         el.value = value.toFixed(5);
       },
       hook: 'latitude'
@@ -39,11 +39,11 @@ export default View.extend({
 
     'model.height': {
       type: function (el, value) {
-        if ( el.contains( document.activeElement ) ) return;
+        if ( el.contains( document.activeElement ) ) { return; }
         el.value = value.toFixed(1);
       },
       hook: 'height'
-    },
+    }
 
   },
 

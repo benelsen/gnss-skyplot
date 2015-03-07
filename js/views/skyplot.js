@@ -109,7 +109,7 @@ export default View.extend({
     var svg = d3.select(this.el);
 
     // re-render only when size changes and in foreground
-    if ( e && width == svg.attr('width') && height == svg.attr('height') ) {
+    if ( e && width === svg.attr('width') && height === svg.attr('height') ) {
       log.info('render aborted', 'same dimensions', e);
       return;
     }
@@ -119,7 +119,7 @@ export default View.extend({
     svg.attr('width', width)
        .attr('height', height);
 
-    var scale = Math.min(width,height) * 0.44;
+    var scale = Math.min(width, height) * 0.44;
 
     var projection = this.projection
       .scale(scale)
@@ -237,16 +237,17 @@ export default View.extend({
       updateOrbitalPath.call(d3.select(this), d, projection, path);
     });
 
-  },
+  }
 
 });
 
-function flippedStereographic(λ, φ)  {
-  var cosλ = Math.cos(λ),
-      cosφ = Math.cos(φ),
-      k = 1 / (1 + cosλ * cosφ);
+function flippedStereographic (λ, φ) {
+  var cosλ = Math.cos(λ);
+  var cosφ = Math.cos(φ);
+  var k = 1 / (1 + cosλ * cosφ);
+
   return [
-    k * cosφ * Math.sin(λ),
+     k * cosφ * Math.sin(λ),
     -k * Math.sin(φ)
   ];
 }
@@ -273,8 +274,8 @@ function updateOrbitalPath (satellite, projection, path) {
 
   // log.info('update path', satellite.prn);
 
+  var now = new Date( app.user.time );
   var prev = new Date( app.user.time - 1 * satellite.period * 1e3 );
-  var now  = new Date( app.user.time );
   var next = new Date( app.user.time + 1 * satellite.period * 1e3 );
 
   var positions = d3.time.minutes(prev, next, 10)

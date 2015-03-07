@@ -1,7 +1,7 @@
 
 /* Logging */
-import bows from 'bows';
-var log = bows('SatelliteListItem');
+// import bows from 'bows';
+// var log = bows('SatelliteListItem');
 
 import View from 'ampersand-view';
 
@@ -24,21 +24,21 @@ export default View.extend({
       hook: 'prn'
     },
 
-    'model.healthy':  {
+    'model.healthy': {
       type: 'booleanClass',
       selector: 'tr',
       yes: 'healthy',
       no: 'unhealthy'
     },
 
-    'model.visible':  {
+    'model.visible': {
       type: 'booleanClass',
       selector: 'tr',
       yes: 'visible',
       no: 'invisible'
     },
 
-    'model.selected':  {
+    'model.selected': {
       type: 'booleanClass'
     },
 
@@ -78,7 +78,7 @@ export default View.extend({
         }
       },
       hook: 'range'
-    },
+    }
 
   },
 

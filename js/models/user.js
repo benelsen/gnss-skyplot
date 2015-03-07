@@ -39,12 +39,12 @@ export default AmpersandState.extend({
     },
 
     metadata: {
-      type: 'object',
+      type: 'object'
     },
 
     dop: {
-      type: 'object',
-    },
+      type: 'object'
+    }
 
   },
 
@@ -85,7 +85,7 @@ export default AmpersandState.extend({
       fn: function () {
         return this.position[2];
       }
-    },
+    }
 
   },
 
@@ -141,7 +141,7 @@ export default AmpersandState.extend({
     var locationMatch = /location=([\d.\-+]+)\,([\d.\-+]+)\,([\d.\-+]+)/.exec(document.location.hash);
     log.info('Location from hash:', locationMatch);
     if ( locationMatch ) {
-      this.position = locationMatch.slice(1,4).map(Number);
+      this.position = locationMatch.slice(1, 4).map(Number);
       return true;
     }
 
@@ -159,7 +159,7 @@ export default AmpersandState.extend({
         this.position = [
           position.coords.longitude,
           position.coords.latitude,
-          position.coords.altitude || 0,
+          position.coords.altitude || 0
         ];
 
         log.info('Got the user’s location from geolocation API');

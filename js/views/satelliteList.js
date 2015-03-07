@@ -10,7 +10,7 @@ import SatelliteView from './satelliteListItem';
 export default View.extend({
 
   events: {
-    'click th': 'sortBy',
+    'click th': 'sortBy'
   },
 
   sortBy (e) {
@@ -27,6 +27,6 @@ export default View.extend({
     // this.renderWithTemplate();
     this.renderCollection(this.collection, SatelliteView, this.query('tbody'));
 
-  },
+  }
 
 });

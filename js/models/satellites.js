@@ -93,13 +93,13 @@ export default Collection.extend({
 
   dop () {
 
-    if ( this.length === 0 ) return;
+    if ( this.length === 0 ) { return; }
 
     let U = [];
 
     this.forEach(function (sat) {
 
-      if ( sat.elevation < 0 || !sat.healthy ) return;
+      if ( sat.elevation < 0 || !sat.healthy ) { return; }
 
       let x = sat.topocentric;
       let r = sat.range;
@@ -245,7 +245,7 @@ export default Collection.extend({
 
       });
 
-  },
+  }
 
 });
 

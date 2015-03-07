@@ -1,4 +1,3 @@
-'use strict';
 
 /* Polyfills */
 import 'es5-shim/es5-shim';
@@ -19,7 +18,7 @@ import User from './models/user';
 import MainView from './views/main';
 
 if ( localStorage && localStorage.debug ) {
-  window._app = app;
+  window.app = app;
 }
 
 app.extend({
@@ -47,7 +46,7 @@ app.extend({
 
       domReady( () => {
 
-        if ( ! this.user.setLocationFromHash() ) {
+        if ( !this.user.setLocationFromHash() ) {
           this.user.getLocationFromAPI()
             .then(() => {
               this.satellites.at(0).selected = true;
@@ -83,7 +82,7 @@ app.extend({
 
   stopPulse () {
     clearInterval( this.pulsar );
-  },
+  }
 
 });
 

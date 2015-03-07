@@ -31,7 +31,7 @@ export default AmpersandState.extend({
     meanAnomaly: 'number',
     clockBias: 'number',
     clockDrift: 'number',
-    health: 'number',
+    health: 'number'
 
   },
 

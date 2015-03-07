@@ -32,7 +32,7 @@ export default View.extend({
     'model.dop.tdop': {
       hook: 'tdop',
       type: setToFixed.bind(null, 2)
-    },
+    }
 
   },
 
@@ -42,11 +42,11 @@ export default View.extend({
 
     // this.renderWithTemplate();
 
-  },
+  }
 
 });
 
 function setToFixed (n, el, value) {
-  if ( !value ) return;
+  if ( !value ) { return; }
   el.textContent = value.toFixed(n);
 }
