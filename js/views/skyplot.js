@@ -97,12 +97,20 @@ export default View.extend({
 
     log.info('render', e);
 
+    if ( e &&
+      ('visibilityState' in document && document.visibilityState === 'hidden') ||
+      document.hidden ) {
+      log.info('render aborted', 'hidden', e);
+      return;
+    }
+
     var {width, height} = this.el.getClientRects()[0];
 
     var svg = d3.select(this.el);
 
-    // re-render only when size changes
+    // re-render only when size changes and in foreground
     if ( e && width == svg.attr('width') && height == svg.attr('height') ) {
+      log.info('render aborted', 'same dimensions', e);
       return;
     }
 
