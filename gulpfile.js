@@ -35,7 +35,11 @@ function bundle(watch) {
 
   if ( !bundler ) {
 
-    bundler = watchify( browserify('./js/app.js', watchify.args) )
+    bundler = watchify(
+        browserify('./js/app.js', {
+          cache: {}, packageCache: {}, fullPaths: true, debug: true
+        })
+      )
       .transform(babelify)
       .on('update', bundle)
       .on('log', gutil.log.bind(gutil, 'Watchify:'));
@@ -47,7 +51,7 @@ function bundle(watch) {
     .pipe(source('app.js'))
       .pipe(buffer())
       .pipe( sourcemaps.init({loadMaps: true}) )
-      .pipe( sourcemaps.write('./', {sourceRoot: './js'}) )
+      .pipe( sourcemaps.write('./', {sourceRoot: '../../', includeContent: false}) )
     .pipe(gulp.dest('build/js'));
 
 }
