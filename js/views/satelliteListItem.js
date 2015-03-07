@@ -45,7 +45,11 @@ export default View.extend({
     'model.elevation': {
       type: function (el, value, prevValue) {
         el.querySelector('span').textContent = value.toFixed(1);
-        toggleClass(el, 'inc', prevValue && prevValue && value > prevValue);
+
+        if ( Number.isFinite(value) && Number.isFinite(prevValue) ) {
+          toggleClass(el, 'increase', value > prevValue);
+          toggleClass(el, 'decrease', value < prevValue);
+        }
       },
       hook: 'elevation'
     },
@@ -53,7 +57,11 @@ export default View.extend({
     'model.azimuth': {
       type: function (el, value, prevValue) {
         el.querySelector('span').textContent = value.toFixed(1);
-        toggleClass(el, 'inc', prevValue && prevValue && value > prevValue);
+
+        if ( Number.isFinite(value) && Number.isFinite(prevValue) ) {
+          toggleClass(el, 'increase', value > prevValue);
+          toggleClass(el, 'decrease', value < prevValue);
+        }
       },
       hook: 'azimuth'
     },
@@ -63,7 +71,11 @@ export default View.extend({
         prevValue *= 1e-3;
         value *= 1e-3;
         el.querySelector('span').textContent = value.toFixed(0);
-        toggleClass(el, 'inc', prevValue && prevValue && value > prevValue);
+
+        if ( Number.isFinite(value) && Number.isFinite(prevValue) ) {
+          toggleClass(el, 'increase', value > prevValue);
+          toggleClass(el, 'decrease', value < prevValue);
+        }
       },
       hook: 'range'
     },

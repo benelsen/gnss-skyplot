@@ -115,31 +115,43 @@ td.prn::before {
   color: #ff3300;
 }
 
-td.inc.elevation::after {
+td.elevation::after {
+  content: '  ';
+}
+
+td.increase.elevation::after {
   content: ' ⬆︎';
   color: #00cc00;
 }
 
-td.elevation::after {
+td.decrease.elevation::after {
   content: ' ⬇︎';
   color: #ff3300;
 }
 
 @media screen and (min-width: 330px) {
 
-  td.inc.range::after  {
+  td.range::after  {
+    content: '  ';
+  }
+
+  td.increase.range::after  {
     content: ' +';
   }
 
-  td.range::after  {
+  td.decrease.range::after  {
     content: ' -';
   }
 
-  td.inc.azimuth::after {
+  td.azimuth::after {
+    content: '  ';
+  }
+
+  td.increase.azimuth::after {
     content: ' ←';
   }
 
-  td.azimuth::after {
+  td.decrease.azimuth::after {
     content: ' →';
   }
 
