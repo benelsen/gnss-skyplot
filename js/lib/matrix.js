@@ -1,17 +1,36 @@
+/**
+ * Matrix math module.
+ * @module js/lib/matrix
+ */
 
+/**
+ * A 1D vector
+ * @typedef {number[]} Vector
+ */
+
+/**
+ * A 2D matrix
+ * @typedef {Vector[]} Matrix
+ */
+
+/**
+ * Inverts a matrix
+ * @param  {Matrix} A - matrix to invert (must be invertable)
+ * @return {Matrix} Inverted matrix
+ */
 export function invert (A) {
 
-  var N = A.length;
+  var n = A.length;
 
-  var [L,U] = decomposeLU(A, N);
+  var [L, U] = decomposeLU(A);
 
-  var X = matrix(N, N);
+  var X = matrix(n, n);
 
-  for (let i = 0; i < N; i++) {
+  for (let i = 0; i < n; i++) {
 
-    let b = Array(N);
+    let b = Array(n);
 
-    for (let j = 0; j < N; j++) {
+    for (let j = 0; j < n; j++) {
       b[j] = i === j ? 1 : 0;
     }
 
@@ -22,10 +41,18 @@ export function invert (A) {
   return transpose(X);
 }
 
-export function decomposeLU (A, n) {
+/**
+ * Calculates the LU Decomposition of a matrix.
+ * @param  {Matrix} A - matrix to decompose
+ * @return {Array}
+ *  @0 {Matrix} L
+ *  @1 {Matrix} U
+ */
+export function decomposeLU (A) {
 
   var U = JSON.parse(JSON.stringify(A));
 
+  var n = A.length;
   var L = eye(n);
 
   for (let i = 1; i <= n-1; i++) {
@@ -47,6 +74,13 @@ export function decomposeLU (A, n) {
   return [L, U];
 }
 
+/**
+ * Evaluate L U x = b
+ * @param  {Matrix} L
+ * @param  {Matrix} U
+ * @param  {Vector} b
+ * @return {Vector}
+ */
 export function evaluateLU (L, U, b) {
 
   var n = b.length;
@@ -78,6 +112,12 @@ export function evaluateLU (L, U, b) {
   return x;
 }
 
+/**
+ * Multiplicate two matrices
+ * @param  {Matrix} A
+ * @param  {Matrix} B
+ * @return {Matrix}
+ */
 export function mult (A, B) {
 
   var C = matrix(A.length, B[0].length);
@@ -101,6 +141,11 @@ export function mult (A, B) {
   return C;
 }
 
+/**
+ * Transpose a matrix
+ * @param  {Matrix}
+ * @return {Matrix}
+ */
 export function transpose (A) {
 
   var C = matrix(A[0].length, A.length);
@@ -118,6 +163,11 @@ export function transpose (A) {
   return C;
 }
 
+/**
+ * Generate an identity matrix of size n
+ * @param  {number} n
+ * @return {Matrix}
+ */
 export function eye (n) {
 
   var A = Array(n);
@@ -134,6 +184,12 @@ export function eye (n) {
   return A;
 }
 
+/**
+ * Create an uninitialized matrix of size (n,m)
+ * @param  {number} n
+ * @param  {number} m
+ * @return {Matrix}
+ */
 export function matrix (n, m) {
 
   var C = Array(n);
