@@ -122,6 +122,8 @@ export function mult (A, B) {
 
   var C = matrix(A.length, B[0].length);
 
+  /*eslint-disable camelcase */
+
   for (let a_i = 0; a_i < A.length; a_i++) {
 
     for (let b_j = 0; b_j < B[0].length; b_j++) {
@@ -137,6 +139,8 @@ export function mult (A, B) {
     }
 
   }
+
+  /*eslint-enable camelcase */
 
   return C;
 }

@@ -1,7 +1,7 @@
 {
-  "parser": "babel-eslint",
   "env": {
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "globals": {
     "fetch": true
@@ -10,6 +10,11 @@
     "strict": 0,
     "quotes": "single",
     "new-cap": false,
-    "no-use-before-define": false
+    "no-use-before-define": false,
+    "no-undef": false,
+    "space-infix-ops": false
+  },
+  "ecmaFeatures": {
+    "modules": true
   }
 }
