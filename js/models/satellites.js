@@ -66,7 +66,7 @@ export default Collection.extend({
     app.on('user:change:timeOffset', (e) => {
       log.info('User timeOffset change event', e);
 
-      this.fetch()
+      this.fetchFromAPI()
         .then( (ephemerides) => {
           this.reset(ephemerides.satellites);
         })
@@ -181,7 +181,7 @@ export default Collection.extend({
         log.warn('Couldn’t load ephemerides from local storage');
         log.info('Trying to load ephemerides from API');
 
-        return this.fetch()
+        return this.fetchFromAPI()
           .catch(function (err) {
 
             log.warn('Couldn’t load ephemerides from API', err.stack);
@@ -210,7 +210,7 @@ export default Collection.extend({
 
   },
 
-  fetch () {
+  fetchFromAPI: function () {
 
     var url = 'https://benelsen.com/gps-skyplot/api/almanac/';
 
@@ -249,14 +249,7 @@ export default Collection.extend({
 
 });
 
-function pad(x, n, p) {
-
-  if ( !p ) {
-    p = '0';
-  }
-
+function pad(x, n, p = '0') {
   x = x.toString();
-
   return p.repeat( n - x.length ) + x;
-
 }
