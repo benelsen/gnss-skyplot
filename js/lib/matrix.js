@@ -55,15 +55,15 @@ export function decomposeLU (A) {
   var n = A.length;
   var L = eye(n);
 
-  for (let i = 1; i <= n-1; i++) {
+  for (let i = 1; i <= n - 1; i++) {
 
-    for (let k = i+1; k <= n; k++) {
+    for (let k = i + 1; k <= n; k++) {
 
-      L[k-1][i-1] = U[k-1][i-1] / U[i-1][i-1];
+      L[k - 1][i - 1] = U[k - 1][i - 1] / U[i - 1][i - 1];
 
       for (let j = i; j <= n; j++) {
 
-        U[k-1][j-1] = U[k-1][j-1] - L[k-1][i-1] * U[i-1][j-1];
+        U[k - 1][j - 1] = U[k - 1][j - 1] - L[k - 1][i - 1] * U[i - 1][j - 1];
 
       }
 

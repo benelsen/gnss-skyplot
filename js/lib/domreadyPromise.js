@@ -3,7 +3,7 @@ import domReady from 'domready';
 
 export default function () {
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
 
     domReady(resolve);
 

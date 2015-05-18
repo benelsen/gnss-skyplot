@@ -72,7 +72,11 @@ gulp.task('uglify-js', ['js'], function () {
   return gulp.src([
       'build/js/app.js'
     ])
-    .pipe(uglify())
+    .pipe(uglify({
+      global_defs: {
+        DEBUG: false
+      }
+    }))
     .pipe(rename({
       suffix: '.min'
     }))

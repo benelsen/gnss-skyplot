@@ -74,14 +74,14 @@ export default View.extend({
 
     this.collection.on('change', (satellite) => {
 
-      var el = d3.select('g.satellites g.satellite[data-prn=prn'+satellite.prn+']');
+      var el = d3.select('g.satellites g.satellite[data-prn=prn' + satellite.prn + ']');
       updateSat.call(el, satellite, this.projection, this.path);
 
     });
 
     this.collection.on('change:selected', (satellite, value) => {
 
-      svg.select('g.satellites g.satellite[data-prn=prn'+satellite.prn+']')
+      svg.select('g.satellites g.satellite[data-prn=prn' + satellite.prn + ']')
           .classed('highlight', value)
         .select('g.position circle').attr('r', value ? 4 : 3);
 
@@ -144,7 +144,7 @@ export default View.extend({
         .attr('transform', function (d) {
           var p = projection([d, -5]);
 
-          var r = d % 90 === 0 ? 0 : ( (d+90) % 180 ) - 90;
+          var r = d % 90 === 0 ? 0 : ( (d + 90) % 180 ) - 90;
 
           return 'translate(' + p[0] + ', ' + p[1] + ')rotate(' + r + ')';
         });

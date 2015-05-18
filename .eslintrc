@@ -7,12 +7,9 @@
     "fetch": true
   },
   "rules": {
-    "strict": 0,
     "quotes": "single",
     "new-cap": false,
-    "no-use-before-define": false,
-    "no-undef": false,
-    "space-infix-ops": false
+    "no-use-before-define": false
   },
   "ecmaFeatures": {
     "modules": true
